@@ -108,13 +108,31 @@ body {
 .card-header .ch-right { font-size: 12px; color: #3b82f6; cursor: pointer; }
 .card-header .ch-right-muted { font-size: 12px; color: #a8a29e; cursor: pointer; }
 
-/* ── SECTION 3: THREE-COLUMN VISUAL PANELS ── */
+/* ── SECTION 3: FOUR-COLUMN VISUAL PANELS ── */
 .visual-grid {
   display: grid;
-  grid-template-columns: 200px minmax(0,1fr) minmax(0,1fr);
+  grid-template-columns: 200px minmax(0,0.7fr) minmax(0,1fr) minmax(0,1.5fr);
   gap: 12px;
 }
 @media (max-width: 900px) { .visual-grid { grid-template-columns: 1fr; } }
+
+/* Invested accounts table (top panel) */
+.acct-table { width: 100%; border-collapse: collapse; }
+.acct-table th {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: #a8a29e;
+  background: #f8fbff; padding: 7px 12px; text-align: left;
+  border-bottom: 1px solid #eef3fb;
+}
+.acct-table td { padding: 10px 12px; border-top: 1px solid #eef3fb; color: #1c1917; vertical-align: middle; font-size: 12px; }
+.acct-table td.amt { text-align: right; font-weight: 600; font-size: 13px; }
+.acct-table td.ytd-pos { text-align: right; color: #16a34a; font-weight: 700; font-size: 13px; }
+.acct-table td.ytd-nil { text-align: right; color: #a8a29e; font-size: 12px; }
+.acct-name-main { font-size: 13px; font-weight: 600; color: #1c1917; }
+.acct-name-sub  { display: block; font-size: 11px; color: #a8a29e; margin-top: 1px; }
+
+/* YTD class reused in balance sheet table too */
+.ytd-pos { color: #16a34a; font-weight: 700; }
 
 /* Metric cards stack */
 .metric-stack { display: flex; flex-direction: column; gap: 8px; }
@@ -540,6 +558,50 @@ body {
       </div>
     </div>
 
+    <!-- Column D: Invested accounts -->
+    <div class="card">
+      <div class="card-header">
+        <div class="ch-left"><i class="ti ti-report-money" aria-hidden="true"></i>Invested accounts</div>
+        <span class="src-badge src-live" style="font-size:11px;padding:3px 9px;"><i class="ti ti-refresh" style="font-size:10px;margin-right:3px;" aria-hidden="true"></i>Altruist · Live</span>
+      </div>
+      <table class="acct-table">
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th style="text-align:right;">Value</th>
+            <th style="text-align:right;">YTD</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="acct-name-main">Robert — IRA</span><span class="acct-name-sub">Rollover IRA</span></td>
+            <td class="amt">$485,000</td>
+            <td class="ytd-pos">+7.2%</td>
+            <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
+          </tr>
+          <tr>
+            <td><span class="acct-name-main">Joint brokerage</span><span class="acct-name-sub">Taxable</span></td>
+            <td class="amt">$620,000</td>
+            <td class="ytd-pos">+8.1%</td>
+            <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
+          </tr>
+          <tr>
+            <td><span class="acct-name-main">Linda — Roth IRA</span><span class="acct-name-sub">Roth IRA</span></td>
+            <td class="amt">$300,000</td>
+            <td class="ytd-pos">+9.3%</td>
+            <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
+          </tr>
+          <tr>
+            <td><span class="acct-name-main">Linda — 401(k)</span><span class="acct-name-sub">Fidelity · held-away</span></td>
+            <td class="amt">$395,000</td>
+            <td class="ytd-nil">—</td>
+            <td><span class="src-badge src-doc">Jan 25</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </div>
 
@@ -575,35 +637,35 @@ body {
               <thead>
                 <tr>
                   <th>Account</th>
-                  <th>Source</th>
-                  <th>Yield / Rate</th>
                   <th style="text-align:right;">Value</th>
+                  <th style="text-align:right;">YTD</th>
+                  <th>Source</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Robert – Brokerage<span class="acct-sub">Altruist ···4821</span></td>
-                  <td><span class="src-badge src-live">Live</span></td>
-                  <td class="muted">—</td>
+                  <td>Robert — IRA<span class="acct-sub">Rollover IRA</span></td>
+                  <td class="right">$485,000</td>
+                  <td class="right ytd-pos">+7.2%</td>
+                  <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
+                </tr>
+                <tr>
+                  <td>Joint brokerage<span class="acct-sub">Taxable</span></td>
                   <td class="right">$620,000</td>
+                  <td class="right ytd-pos">+8.1%</td>
+                  <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
                 </tr>
                 <tr>
-                  <td>Robert – 401(k)<span class="acct-sub">Fidelity</span></td>
-                  <td><span class="src-badge src-doc">Plan stmt · Jan</span></td>
-                  <td class="muted">—</td>
-                  <td class="right">$710,000</td>
+                  <td>Linda — Roth IRA<span class="acct-sub">Roth IRA</span></td>
+                  <td class="right">$300,000</td>
+                  <td class="right ytd-pos">+9.3%</td>
+                  <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
                 </tr>
                 <tr>
-                  <td>Linda – IRA<span class="acct-sub">Altruist ···2203</span></td>
-                  <td><span class="src-badge src-live">Live</span></td>
-                  <td class="muted">—</td>
-                  <td class="right">$310,000</td>
-                </tr>
-                <tr>
-                  <td>Joint – Money market<span class="acct-sub">Altruist ···0044</span></td>
-                  <td><span class="src-badge src-live">Live</span></td>
-                  <td class="green">4.85% APY</td>
-                  <td class="right">$160,000</td>
+                  <td>Linda — 401(k)<span class="acct-sub">Fidelity · held-away</span></td>
+                  <td class="right">$395,000</td>
+                  <td class="right muted">—</td>
+                  <td><span class="src-badge src-doc">Jan 25</span></td>
                 </tr>
               </tbody>
             </table>
@@ -818,6 +880,8 @@ body {
               <span class="pill pill-amber">Daughter starting college 2026</span>
               <span class="pill pill-blue">Robert planning business exit</span>
               <span class="pill pill-pink">Father passed 2024</span>
+              <span class="pill pill-gray"><i class="ti ti-cake" style="font-size:10px;margin-right:3px;" aria-hidden="true"></i>Robert · Jun 3</span>
+              <span class="pill pill-gray"><i class="ti ti-cake" style="font-size:10px;margin-right:3px;" aria-hidden="true"></i>Linda · Sep 17</span>
             </div>
           </div>
           <div class="kt-row">

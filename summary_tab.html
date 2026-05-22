@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,75 +20,57 @@ body {
   min-height: 100vh;
 }
 
-/* ── TAB STRIP (sticky) ── */
+/* ── TAB STRIP ── */
 .tab-strip {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #fff;
-  border-bottom: 1px solid #e7e5e0;
-  padding: 0 28px;
-  display: flex;
-  align-items: stretch;
+  position: sticky; top: 0; z-index: 10;
+  background: #fff; border-bottom: 1px solid #e7e5e0;
+  padding: 0 28px; display: flex; align-items: stretch;
 }
 .tab {
-  font-size: 13px;
-  color: #78716c;
-  padding: 13px 14px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  white-space: nowrap;
+  font-size: 13px; color: #78716c;
+  padding: 13px 14px; cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap;
 }
-.tab.active {
-  color: #3b82f6;
-  font-weight: 600;
-  border-bottom: 2px solid #3b82f6;
-}
+.tab.active { color: #3b82f6; font-weight: 600; border-bottom: 2px solid #3b82f6; }
 
 /* ── HOUSEHOLD HEADER ── */
 .hh-header {
-  background: #fff;
-  border-bottom: 1px solid #e7e5e0;
-  padding: 18px 28px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  background: #fff; border-bottom: 1px solid #e7e5e0;
+  padding: 18px 28px; display: flex; align-items: flex-start; gap: 14px;
 }
 .hh-avatar {
   width: 52px; height: 52px; border-radius: 50%;
   background: #3b82f6; color: #fff;
   font-size: 17px; font-weight: 600;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .hh-center { flex: 1; }
 .hh-name { font-size: 24px; font-weight: 700; color: #1c1917; }
+.hh-location { font-size: 12px; color: #a8a29e; margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+.hh-location i { font-size: 12px; }
 .hh-meta {
   display: flex; align-items: center; gap: 6px;
-  font-size: 13px; color: #78716c; margin-top: 5px; flex-wrap: wrap;
+  font-size: 13px; color: #78716c; margin-top: 6px; flex-wrap: wrap;
 }
 .hh-meta a { color: #3b82f6; text-decoration: none; cursor: pointer; }
-.hh-meta .sep { color: #d6d3d1; }
+.hh-meta .sep  { color: #d6d3d1; }
 .hh-meta .pipe { color: #d6d3d1; margin: 0 4px; }
 .hh-meta .meta-item { display: flex; align-items: center; gap: 3px; }
 .hh-meta .meta-item i { font-size: 13px; color: #a8a29e; }
 .hh-pills { display: flex; gap: 7px; margin-top: 9px; flex-wrap: wrap; }
 .hh-pill {
   display: inline-flex; align-items: center;
-  font-size: 12px; font-weight: 500;
-  padding: 3px 10px; border-radius: 99px; border: 1px solid;
+  font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid;
 }
 .pill-amber-hd  { background: #fef3c7; color: #92400e; border-color: #fde68a; }
 .pill-salmon-hd { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
 .hh-completeness {
-  display: flex; align-items: center; gap: 7px;
-  margin-top: 9px; font-size: 12px;
+  display: flex; align-items: center; gap: 7px; margin-top: 9px; font-size: 12px;
 }
 .hh-completeness .cp-lbl { color: #a8a29e; }
 .progress-track {
-  width: 140px; height: 4px;
-  background: #e7e5e0; border-radius: 99px; overflow: hidden; flex-shrink: 0;
+  width: 140px; height: 4px; background: #e7e5e0;
+  border-radius: 99px; overflow: hidden; flex-shrink: 0;
 }
 .progress-fill { height: 100%; background: #3b82f6; border-radius: 99px; }
 .hh-completeness .cp-pct { color: #3b82f6; font-weight: 600; }
@@ -105,26 +88,12 @@ body {
 }
 
 /* ── METRIC CARDS ── */
-.metrics-bg {
-  background: #f5f4f1;
-  border-bottom: 1px solid #e7e5e0;
-  padding: 16px 28px;
-}
-.metrics-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-}
-.metric-card {
-  background: #fff; border: 1px solid #e7e5e0; border-radius: 12px; padding: 14px 16px;
-}
-.metric-label {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.07em; color: #a8a29e;
-}
+.metrics-bg { background: #f5f4f1; border-bottom: 1px solid #e7e5e0; padding: 16px 28px; }
+.metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.metric-card { background: #fff; border: 1px solid #e7e5e0; border-radius: 12px; padding: 14px 16px; }
+.metric-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #a8a29e; }
 .metric-value { font-size: 26px; font-weight: 700; color: #1c1917; margin-top: 3px; }
-.metric-delta {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 12px; color: #16a34a; margin-top: 5px; font-weight: 600;
-}
+.metric-delta { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #16a34a; margin-top: 5px; font-weight: 600; }
 .metric-delta i { font-size: 13px; }
 .metric-sub { font-size: 12px; color: #78716c; margin-top: 4px; }
 
@@ -132,29 +101,22 @@ body {
 .two-col {
   padding: 20px 28px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: 12px;
   align-items: start;
 }
-@media (max-width: 900px) {
-  .two-col { grid-template-columns: 1fr; }
-}
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
 
-/* ── LEFT COLUMN STACK ── */
+/* ── LEFT COLUMN ── */
 .left-col { display: flex; flex-direction: column; gap: 12px; }
 
 /* ── GENERIC CARD ── */
-.card {
-  background: #fff; border: 1px solid #e7e5e0; border-radius: 12px; overflow: hidden;
-}
+.card { background: #fff; border: 1px solid #e7e5e0; border-radius: 12px; overflow: hidden; }
 .card-header {
   padding: 12px 16px; border-bottom: 1px solid #e7e5e0;
   display: flex; align-items: center; justify-content: space-between;
 }
-.card-header .ch-left {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 13px; font-weight: 600; color: #1c1917;
-}
+.card-header .ch-left { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: #1c1917; }
 .card-header .ch-left i { font-size: 14px; color: #78716c; }
 .card-header .ch-right { font-size: 12px; color: #3b82f6; cursor: pointer; }
 
@@ -165,17 +127,13 @@ body {
 }
 .fact-row:last-of-type { border-bottom: none; }
 .fact-icon {
-  width: 32px; height: 32px; border-radius: 8px;
-  background: #dbeafe;
+  width: 32px; height: 32px; border-radius: 8px; background: #dbeafe;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; margin-top: 1px;
 }
 .fact-icon i { font-size: 15px; color: #3b82f6; }
 .fact-meta { width: 120px; flex-shrink: 0; }
-.fact-cat {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #44403c;
-}
+.fact-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #44403c; }
 .fact-src { font-size: 10px; color: #a8a29e; margin-top: 2px; line-height: 1.4; }
 .fact-body { flex: 1; font-size: 12px; color: #78716c; line-height: 1.55; }
 .fact-body strong { font-weight: 600; color: #1c1917; }
@@ -184,43 +142,41 @@ body {
   font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 99px;
   white-space: nowrap; flex-shrink: 0; margin-top: 2px; margin-left: auto;
 }
-.sc-green   { background: #dcfce7; color: #166534; }
-.sc-amber   { background: #fef3c7; color: #92400e; }
-.sc-red     { background: #fee2e2; color: #991b1b; }
+.sc-green { background: #dcfce7; color: #166534; }
+.sc-amber { background: #fef3c7; color: #92400e; }
+.sc-red   { background: #fee2e2; color: #991b1b; }
 .card-footer-tier {
   padding: 9px 16px; background: #fafaf8; border-top: 1px solid #f0eee8;
   display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
 }
 .tier-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #a8a29e; }
-.tier-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.tier-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 
 /* ── ALERT CARDS ── */
-.alert-card {
-  border-radius: 12px; padding: 14px 16px; border: 1px solid;
-}
-.alert-card.conflict {
-  background: #fff7ed; border-color: #fed7aa;
-}
-.alert-card.missing {
-  background: #eff6ff; border-color: #bfdbfe;
-}
-.alert-card-title {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 13px; font-weight: 600; margin-bottom: 7px;
-}
+.alert-card { border-radius: 12px; padding: 14px 16px; border: 1px solid; }
+.alert-card.conflict { background: #fff7ed; border-color: #fed7aa; }
+.alert-card.missing  { background: #eff6ff; border-color: #bfdbfe; }
+.alert-card-title { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; margin-bottom: 7px; }
 .alert-card.conflict .alert-card-title { color: #c2410c; }
-.alert-card.missing .alert-card-title { color: #1d4ed8; }
+.alert-card.missing  .alert-card-title { color: #1d4ed8; }
 .alert-card-title i { font-size: 15px; }
 .alert-card-body { font-size: 12px; color: #78716c; line-height: 1.6; }
-.alert-card-link {
-  display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 500;
-  text-decoration: underline; cursor: pointer;
-}
+.alert-card-link { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 500; text-decoration: underline; cursor: pointer; }
 .alert-card.conflict .alert-card-link { color: #c2410c; }
-.alert-card.missing .alert-card-link { color: #1d4ed8; }
+.alert-card.missing  .alert-card-link { color: #1d4ed8; }
 
-/* ── KNOW THEM (RIGHT COLUMN) ── */
-.right-col { display: flex; flex-direction: column; gap: 0; }
+/* ── PILLS ── */
+.pill {
+  display: inline-flex; align-items: center;
+  font-size: 11px; padding: 3px 9px; border-radius: 99px; border: 1px solid; white-space: nowrap;
+}
+.pill-gray  { background: #f5f4f1; color: #44403c; border-color: #e7e5e0; }
+.pill-amber { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+.pill-blue  { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+.pill-green { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+.pill-pink  { background: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
+
+/* ── KNOW THEM ROWS ── */
 .kt-row {
   display: flex; align-items: flex-start;
   padding: 10px 16px; border-bottom: 1px solid #f5f4f1; gap: 10px;
@@ -233,50 +189,32 @@ body {
 }
 .kt-chips { display: flex; flex-wrap: wrap; gap: 5px; flex: 1; }
 
-/* ── PILL COLORS ── */
-.pill {
-  display: inline-flex; align-items: center;
-  font-size: 11px; padding: 3px 9px; border-radius: 99px; border: 1px solid;
-  white-space: nowrap;
-}
-.pill-gray   { background: #f5f4f1; color: #44403c; border-color: #e7e5e0; }
-.pill-amber  { background: #fef3c7; color: #92400e; border-color: #fde68a; }
-.pill-blue   { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
-.pill-green  { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
-.pill-pink   { background: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
-
-/* ── NARRATIVE BLOCK ── */
+/* ── NARRATIVE ── */
 .narrative-block { padding: 14px 16px; border-top: 1px solid #f5f4f1; }
-.narrative-text {
-  font-size: 13px; color: #44403c; line-height: 1.65;
-}
+.narrative-text { font-size: 13px; color: #44403c; line-height: 1.65; }
 .narrative-ts {
   display: flex; align-items: center; gap: 5px;
   font-size: 11px; color: #a8a29e; margin-top: 10px;
 }
 .narrative-ts i { font-size: 12px; }
 
-/* ── LAST CONVERSATION BLOCK ── */
+/* ── LAST CONVERSATION ── */
 .last-convo {
   margin: 0 16px 14px;
-  background: #f8f8f6; border: 1px solid #e7e5e0; border-radius: 10px;
-  padding: 12px 14px;
+  background: #f8f8f6; border: 1px solid #e7e5e0; border-radius: 8px; padding: 12px;
 }
 .last-convo-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 9px;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px;
 }
-.last-convo-title { font-size: 12px; font-weight: 600; color: #1c1917; }
-.last-convo-meta  { font-size: 11px; color: #a8a29e; }
-.last-convo-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 9px; }
-.last-convo-summary { font-size: 12px; color: #78716c; line-height: 1.6; }
-.last-convo-divider {
-  border: none; border-top: 1px solid #e7e5e0; margin: 10px 0;
-}
-.last-convo-themes { font-size: 11px; color: #a8a29e; line-height: 1.6; }
+.last-convo-title  { font-size: 12px; font-weight: 600; color: #1c1917; }
+.last-convo-meta   { font-size: 11px; color: #a8a29e; }
+.last-convo-pills  { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 9px; }
+.last-convo-summary { font-size: 12px; color: #57534e; line-height: 1.6; }
+.last-convo-divider { border: none; border-top: 1px solid #e7e5e0; margin: 10px 0; }
+.last-convo-themes  { font-size: 11px; color: #a8a29e; line-height: 1.6; }
 .last-convo-themes strong { color: #78716c; font-weight: 600; }
 
-/* ── HAZEL INSIGHTS (full width) ── */
+/* ── HAZEL INSIGHTS ── */
 .full-width-section { padding: 0 28px 16px; }
 .hz-row {
   display: flex; align-items: flex-start;
@@ -284,14 +222,13 @@ body {
 }
 .hz-row:last-child { border-bottom: none; }
 .hz-icon-circle {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: #f0ede8;
+  width: 30px; height: 30px; border-radius: 50%; background: #f0ede8;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; margin-top: 1px;
 }
 .hz-icon-circle i { font-size: 14px; color: #78716c; }
 .hz-body { flex: 1; }
-.hz-title { font-size: 13px; font-weight: 600; color: #1c1917; }
+.hz-title { font-size: 14px; font-weight: 600; color: #1c1917; }
 .hz-desc  { font-size: 12px; color: #78716c; margin-top: 3px; line-height: 1.55; }
 .hz-link  { font-size: 12px; color: #3b82f6; margin-top: 5px; display: inline-block; cursor: pointer; }
 .severity-badge {
@@ -301,39 +238,39 @@ body {
 }
 .sev-high   { background: #fee2e2; color: #991b1b; }
 .sev-medium { background: #fef3c7; color: #92400e; }
+.opps-badge { background: #dbeafe; color: #1e40af; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 6px; }
 
-/* ── DASHBOARDS (full width) ── */
-.dash-bg { background: #f8f7f4; }
+/* ── DASHBOARDS ── */
+.dash-inner { background: #f8f7f4; border-radius: 8px; margin: 0 16px 16px; overflow: hidden; }
 .dash-panels { display: grid; grid-template-columns: 1fr 1fr; }
 .dash-panel { padding: 16px 18px; }
 .dash-panel.left-p { border-right: 1px solid #e7e5e0; }
-.dash-subtitle {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #a8a29e; margin-bottom: 12px;
-}
+.dash-subtitle { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #a8a29e; margin-bottom: 12px; }
 .dash-total { margin-bottom: 12px; }
 .dash-total-val { font-size: 20px; font-weight: 700; color: #1c1917; }
 .dash-total-lbl { font-size: 12px; color: #a8a29e; margin-left: 6px; }
 .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
 .bar-row:last-child { margin-bottom: 0; }
-.bar-lbl { font-size: 11px; color: #78716c; text-align: right; width: 68px; flex-shrink: 0; }
-.bar-track {
-  flex: 1; height: 12px; background: #ede9e4; border-radius: 99px; overflow: hidden;
-}
-.bar-fill { height: 100%; border-radius: 99px; }
-.bar-val { font-size: 11px; font-weight: 600; width: 48px; text-align: right; flex-shrink: 0; }
-.alloc-subtitle { font-size: 12px; color: #78716c; margin-bottom: 12px; }
-.alloc-list { display: flex; flex-direction: column; gap: 9px; }
+.bar-lbl  { font-size: 11px; color: #78716c; text-align: right; width: 68px; flex-shrink: 0; }
+.bar-track { flex: 1; height: 12px; background: #ede9e4; border-radius: 99px; overflow: hidden; }
+.bar-fill  { height: 100%; border-radius: 99px; }
+.bar-val   { font-size: 11px; font-weight: 600; width: 48px; text-align: right; flex-shrink: 0; }
+
+/* ── ALLOCATION PANEL ── */
+.alloc-layout { display: flex; align-items: center; gap: 16px; }
+.alloc-chart-wrap { flex-shrink: 0; width: 120px; height: 120px; position: relative; }
+.alloc-chart-wrap canvas { width: 120px !important; height: 120px !important; }
+.alloc-legend { display: flex; flex-direction: column; gap: 9px; flex: 1; }
 .alloc-row { display: flex; align-items: center; gap: 8px; }
-.alloc-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.alloc-dot  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 .alloc-name { font-size: 12px; color: #78716c; flex: 1; }
-.alloc-pct  { font-size: 12px; font-weight: 600; color: #1c1917; width: 36px; text-align: right; }
-.alloc-target { font-size: 11px; color: #a8a29e; width: 60px; }
-.alloc-warn { font-size: 11px; color: #d97706; }
+.alloc-pct  { font-size: 12px; font-weight: 600; color: #1c1917; width: 32px; text-align: right; }
+.alloc-target { font-size: 11px; color: #a8a29e; }
+.alloc-warn-icon { font-size: 12px; color: #d97706; }
 .dash-warning {
-  margin-top: 14px; background: #fffbeb;
-  border: 1px solid #fde68a; border-radius: 8px;
-  padding: 9px 11px; font-size: 11px; color: #92400e; line-height: 1.5;
+  margin-top: 12px; background: #fef3c7; color: #92400e;
+  border-radius: 6px; padding: 8px 10px;
+  font-size: 11px; line-height: 1.5;
   display: flex; align-items: flex-start; gap: 6px;
 }
 .dash-warning i { font-size: 12px; color: #d97706; flex-shrink: 0; margin-top: 1px; }
@@ -341,7 +278,7 @@ body {
 </head>
 <body>
 
-<!-- ── SECTION 1: TAB STRIP (sticky) ── -->
+<!-- SECTION 1: TAB STRIP -->
 <div class="tab-strip" role="tablist">
   <div class="tab active" role="tab" aria-selected="true">Summary</div>
   <div class="tab" role="tab">Meetings</div>
@@ -352,12 +289,15 @@ body {
   <div class="tab" role="tab">Chat</div>
 </div>
 
-<!-- ── SECTION 2: HOUSEHOLD HEADER ── -->
+<!-- SECTION 2: HOUSEHOLD HEADER -->
 <div class="hh-header">
-  <div class="hh-avatar" aria-label="Thornton Household initials">TH</div>
-
+  <div class="hh-avatar" aria-label="Thornton Household">TH</div>
   <div class="hh-center">
     <div class="hh-name">Thornton Household</div>
+    <div class="hh-location">
+      <i class="ti ti-map-pin" aria-hidden="true"></i>
+      San Francisco, CA
+    </div>
     <div class="hh-meta">
       <a>Robert Thornton</a>
       <span class="sep">·</span>
@@ -379,14 +319,18 @@ body {
     </div>
     <div class="hh-completeness">
       <span class="cp-lbl">Profile completeness</span>
-      <div class="progress-track" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="Profile 62% complete">
+      <div class="progress-track"
+           role="progressbar"
+           aria-valuenow="62"
+           aria-valuemin="0"
+           aria-valuemax="100"
+           aria-label="Profile 62% complete">
         <div class="progress-fill" style="width:62%"></div>
       </div>
       <span class="cp-pct">62%</span>
       <span class="cp-add">· Add missing facts →</span>
     </div>
   </div>
-
   <div class="hh-actions">
     <button class="btn-primary">
       <i class="ti ti-wand" aria-hidden="true"></i>
@@ -403,7 +347,7 @@ body {
   </div>
 </div>
 
-<!-- ── SECTION 3: METRIC CARDS ── -->
+<!-- SECTION 3: METRIC CARDS -->
 <div class="metrics-bg">
   <div class="metrics-grid">
     <div class="metric-card">
@@ -428,7 +372,7 @@ body {
   </div>
 </div>
 
-<!-- ── SECTION 4: TWO-COLUMN BODY ── -->
+<!-- SECTION 4: TWO-COLUMN BODY -->
 <div class="two-col">
 
   <!-- LEFT COLUMN -->
@@ -465,7 +409,7 @@ body {
         <div class="fact-body">
           <strong>32%</strong> bracket · MFJ · CA state · QBI eligible
         </div>
-        <span class="status-chip sc-green" role="status">Current</span>
+        <span class="status-chip sc-green" role="status" aria-label="Status: Current">Current</span>
       </div>
 
       <div class="fact-row">
@@ -477,7 +421,7 @@ body {
         <div class="fact-body">
           <strong>$1.8M</strong> invested · <strong>$950k</strong> real estate · <strong>$300k</strong> business
         </div>
-        <span class="status-chip sc-green" role="status">Current</span>
+        <span class="status-chip sc-green" role="status" aria-label="Status: Current">Current</span>
       </div>
 
       <div class="fact-row">
@@ -489,7 +433,7 @@ body {
         <div class="fact-body">
           <strong>$420k</strong> mortgage · 3.2% · payoff 2039 · <strong>$0</strong> other
         </div>
-        <span class="status-chip sc-green" role="status">Current</span>
+        <span class="status-chip sc-green" role="status" aria-label="Status: Current">Current</span>
       </div>
 
       <div class="fact-row">
@@ -525,7 +469,7 @@ body {
         <div class="fact-body">
           Will updated 2023 · Revocable trust · POA active
         </div>
-        <span class="status-chip sc-amber" role="status">Review</span>
+        <span class="status-chip sc-amber" role="status" aria-label="Status: Needs review">Review</span>
       </div>
 
       <div class="card-footer-tier">
@@ -542,7 +486,7 @@ body {
         Data conflict detected
       </div>
       <div class="alert-card-body">
-        The beneficiary listed on Robert's 401(k) account ($890k) is his mother, Margaret Thornton. His current estate documents (updated 2023) designate Linda as primary beneficiary. This mismatch may not reflect your client's current intent and could create complications in the event of a claim.
+        Beneficiary on Schwab investment account (estate) does not match the revocable trust named in estate docs. Last updated sources conflict.
       </div>
       <div class="alert-card-link">Resolve conflict →</div>
     </div>
@@ -554,7 +498,7 @@ body {
         Missing document
       </div>
       <div class="alert-card-body">
-        The household insurance facts reference an LTC policy, but no policy document has been uploaded. Request the current policy from the client to verify coverage terms, benefit period, and premium structure before making recommendations.
+        No LTC insurance policy on file. Insurance row marked Action needed — uploading the policy will allow Hazel to analyze coverage gaps.
       </div>
       <div class="alert-card-link">Send document request →</div>
     </div>
@@ -562,9 +506,8 @@ body {
   </div><!-- /left-col -->
 
   <!-- RIGHT COLUMN: KNOW THEM -->
-  <div class="right-col">
-    <div class="card" style="overflow:visible;">
-
+  <div>
+    <div class="card">
       <div class="card-header">
         <div class="ch-left">
           <i class="ti ti-heart" aria-hidden="true"></i>
@@ -607,10 +550,9 @@ body {
         </div>
       </div>
 
-      <!-- Soft context narrative -->
       <div class="narrative-block">
         <div class="narrative-text">
-          Robert and Linda Thornton have been clients since 2019. Robert owns and operates a mid-sized digital marketing agency with roughly 18 employees, and is actively planning an exit within the next 3–5 years — a decision that will have significant tax, cash flow, and estate implications. Linda works as a nurse practitioner at a regional medical center. They have two adult children: a son in his late twenties and a daughter beginning her first year of college this fall. The couple is highly engaged with their financial plan and prefers clear, concise email communication. They tend to be cautious around complex strategies and appreciate when recommendations include downside scenarios and clear tradeoffs.
+          Robert and Linda Thornton have been clients since 2019. Robert owns and operates a mid-sized digital marketing agency with roughly 18 employees and is actively planning an exit within the next 3–5 years — a decision that will have significant tax, cash flow, and estate implications. Linda works as a nurse practitioner at a regional medical center. They have two adult children: a son in his late twenties and a daughter beginning college this fall. The couple is highly engaged with their financial plan and prefers clear, concise email communication. They tend to be cautious around complex strategies and appreciate recommendations that include downside scenarios and clear tradeoffs.
         </div>
         <div class="narrative-ts">
           <i class="ti ti-clock" aria-hidden="true"></i>
@@ -618,7 +560,6 @@ body {
         </div>
       </div>
 
-      <!-- Last conversation block -->
       <div class="last-convo">
         <div class="last-convo-header">
           <div class="last-convo-title">Last conversation — Apr 28</div>
@@ -630,20 +571,20 @@ body {
           <span class="pill pill-amber" style="font-size:10px;padding:2px 8px;">LTC concern raised</span>
         </div>
         <div class="last-convo-summary">
-          The quarterly review covered the business exit timeline, Roth conversion planning, and insurance gaps. Robert expressed strong interest in optimizing the exit for tax purposes and asked for a preliminary analysis of an installment sale structure. Linda raised concern about long-term care after watching her parents navigate elder care costs — this surfaced the LTC coverage gap as an action item.
+          Quarterly review covered business exit timeline, Roth conversion planning, and insurance gaps. Robert expressed strong interest in optimizing the exit for tax purposes and asked for a preliminary analysis of an installment sale structure. Linda raised concern about long-term care after watching her parents navigate elder care costs — this surfaced the LTC coverage gap as a priority action item.
         </div>
         <hr class="last-convo-divider">
         <div class="last-convo-themes">
-          <strong>Key themes:</strong> Business exit strategy · Roth conversion window · LTC insurance gap · Estate beneficiary review · Daughter's college funding
+          <strong>Key themes:</strong> Business exit strategy · Roth conversion window · LTC insurance gap · Estate beneficiary review · College funding
         </div>
       </div>
 
     </div>
-  </div><!-- /right-col -->
+  </div>
 
 </div><!-- /two-col -->
 
-<!-- ── SECTION 5: HAZEL INSIGHTS (full width) ── -->
+<!-- SECTION 5: HAZEL INSIGHTS -->
 <div class="full-width-section">
   <div class="card">
     <div class="card-header">
@@ -651,71 +592,68 @@ body {
         <i class="ti ti-sparkles" aria-hidden="true"></i>
         Hazel Insights
       </div>
-      <span style="background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:500;padding:3px 10px;border-radius:6px;">
-        3 opportunities
-      </span>
+      <span class="opps-badge">3 opportunities</span>
     </div>
 
     <div class="hz-row">
-      <div class="hz-icon-circle" aria-hidden="true">
-        <i class="ti ti-shield-off"></i>
+      <div class="hz-icon-circle">
+        <i class="ti ti-shield-off" aria-hidden="true"></i>
       </div>
       <div class="hz-body">
         <div class="hz-title">LTC coverage gap</div>
-        <div class="hz-desc">Robert and Linda have no long-term care coverage. Given their assets and retirement timeline, this is a significant planning gap that could erode the portfolio in an extended care event.</div>
+        <div class="hz-desc">Robert and Linda have no long-term care coverage. With a 2031 retirement target, this represents a significant portfolio risk.</div>
         <div class="hz-link">Explore options →</div>
       </div>
-      <span class="severity-badge sev-high" aria-label="Severity: High">High</span>
+      <span class="severity-badge sev-high" role="status" aria-label="Severity: High">High</span>
     </div>
 
     <div class="hz-row">
-      <div class="hz-icon-circle" aria-hidden="true">
-        <i class="ti ti-transform"></i>
+      <div class="hz-icon-circle">
+        <i class="ti ti-transform" aria-hidden="true"></i>
       </div>
       <div class="hz-body">
         <div class="hz-title">Roth conversion window</div>
-        <div class="hz-desc">Income drops at business exit. 2027–2029 may be an optimal window for Roth conversions before RMDs begin — potentially moving $200–300k at lower effective rates.</div>
+        <div class="hz-desc">Income drops significantly at business exit. 2027–2029 may be an optimal window for Roth conversions before RMDs begin.</div>
         <div class="hz-link">Model this →</div>
       </div>
-      <span class="severity-badge sev-medium" aria-label="Severity: Medium">Medium</span>
+      <span class="severity-badge sev-medium" role="status" aria-label="Severity: Medium">Medium</span>
     </div>
 
     <div class="hz-row">
-      <div class="hz-icon-circle" aria-hidden="true">
-        <i class="ti ti-businessplan"></i>
+      <div class="hz-icon-circle">
+        <i class="ti ti-businessplan" aria-hidden="true"></i>
       </div>
       <div class="hz-body">
         <div class="hz-title">Business exit planning</div>
-        <div class="hz-desc">Robert's planned exit in 3–5 years creates tax, cash flow, and estate decisions that should be coordinated now — particularly around deal structure, timing, and the downstream impact on retirement projections.</div>
+        <div class="hz-desc">Robert's planned exit in 3–5 years creates interconnected tax, cash flow, and estate planning decisions that should be addressed now.</div>
         <div class="hz-link">Start conversation →</div>
       </div>
-      <span class="severity-badge sev-medium" aria-label="Severity: Medium">Medium</span>
+      <span class="severity-badge sev-medium" role="status" aria-label="Severity: Medium">Medium</span>
     </div>
   </div>
 </div>
 
-<!-- ── SECTION 6: DASHBOARDS (full width) ── -->
+<!-- SECTION 6: DASHBOARDS -->
 <div class="full-width-section" style="padding-top:0;">
   <div class="card">
     <div class="card-header">
       <div class="ch-left">
-        <i class="ti ti-chart-bar" aria-hidden="true"></i>
+        <i class="ti ti-layout-grid" aria-hidden="true"></i>
         Dashboards
       </div>
       <div class="ch-right">Full analytics →</div>
     </div>
 
-    <div class="dash-bg">
+    <div class="dash-inner">
       <div class="dash-panels">
 
-        <!-- LEFT: Net worth by category -->
+        <!-- LEFT: Net worth -->
         <div class="dash-panel left-p">
           <div class="dash-subtitle">Net worth by category</div>
           <div class="dash-total">
             <span class="dash-total-val">$3,052,000</span>
             <span class="dash-total-lbl">total net worth</span>
           </div>
-
           <div class="bar-row">
             <div class="bar-lbl">Invested</div>
             <div class="bar-track"><div class="bar-fill" style="width:65%;background:#3b82f6;"></div></div>
@@ -738,42 +676,44 @@ body {
           </div>
         </div>
 
-        <!-- RIGHT: Asset allocation vs. target -->
+        <!-- RIGHT: Asset allocation -->
         <div class="dash-panel">
           <div class="dash-subtitle">Asset allocation vs. target</div>
-          <div class="alloc-subtitle">$1.8M invested</div>
-
-          <div class="alloc-list">
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#3b82f6;"></div>
-              <div class="alloc-name">Equities</div>
-              <div class="alloc-pct">68%</div>
-              <div class="alloc-target">vs 65%</div>
+          <div class="alloc-layout">
+            <div class="alloc-chart-wrap">
+              <canvas id="allocChart" aria-label="Asset allocation donut chart" role="img"></canvas>
             </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#8b5cf6;"></div>
-              <div class="alloc-name">Fixed income</div>
-              <div class="alloc-pct">18%</div>
-              <div class="alloc-target">vs 25%</div>
-              <i class="ti ti-alert-circle alloc-warn" aria-label="Below target" style="font-size:12px;"></i>
+            <div class="alloc-legend">
+              <div class="alloc-row">
+                <div class="alloc-dot" style="background:#3b82f6;"></div>
+                <div class="alloc-name">Equities</div>
+                <div class="alloc-pct">68%</div>
+                <div class="alloc-target">vs 65%</div>
+              </div>
+              <div class="alloc-row">
+                <div class="alloc-dot" style="background:#a78bfa;"></div>
+                <div class="alloc-name">Fixed income</div>
+                <div class="alloc-pct">18%</div>
+                <div class="alloc-target">vs 25%</div>
+                <i class="ti ti-alert-circle alloc-warn-icon" aria-label="Below target"></i>
+              </div>
+              <div class="alloc-row">
+                <div class="alloc-dot" style="background:#34d399;"></div>
+                <div class="alloc-name">Alternatives</div>
+                <div class="alloc-pct">9%</div>
+                <div class="alloc-target">vs 5%</div>
+              </div>
+              <div class="alloc-row">
+                <div class="alloc-dot" style="background:#a8a29e;"></div>
+                <div class="alloc-name">Cash</div>
+                <div class="alloc-pct">5%</div>
+                <div class="alloc-target">vs 5%</div>
+              </div>
+              <div class="dash-warning">
+                <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+                Underweight fixed income by 7 points — consider rebalancing before retirement glide path
+              </div>
             </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#10b981;"></div>
-              <div class="alloc-name">Alternatives</div>
-              <div class="alloc-pct">9%</div>
-              <div class="alloc-target">vs 5%</div>
-            </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#a8a29e;"></div>
-              <div class="alloc-name">Cash</div>
-              <div class="alloc-pct">5%</div>
-              <div class="alloc-target">vs 5%</div>
-            </div>
-          </div>
-
-          <div class="dash-warning">
-            <i class="ti ti-alert-triangle" aria-hidden="true"></i>
-            Underweight fixed income by 7 points — consider rebalancing before retirement glide path
           </div>
         </div>
 
@@ -781,6 +721,30 @@ body {
     </div>
   </div>
 </div>
+
+<script>
+  const ctx = document.getElementById('allocChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      datasets: [{
+        data: [68, 18, 9, 5],
+        backgroundColor: ['#3b82f6', '#a78bfa', '#34d399', '#a8a29e'],
+        borderWidth: 0,
+        hoverOffset: 0
+      }]
+    },
+    options: {
+      cutout: '68%',
+      plugins: {
+        legend:  { display: false },
+        tooltip: { enabled: false }
+      },
+      animation: { duration: 600 },
+      responsive: false
+    }
+  });
+</script>
 
 </body>
 </html>

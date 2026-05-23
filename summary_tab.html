@@ -111,7 +111,7 @@ body {
 /* ── SECTION 3: FOUR-COLUMN VISUAL PANELS ── */
 .visual-grid {
   display: grid;
-  grid-template-columns: 200px minmax(0,0.7fr) minmax(0,1fr) minmax(0,1.5fr);
+  grid-template-columns: 230px minmax(0,1fr) minmax(0,1fr) minmax(0,1.4fr);
   gap: 12px;
 }
 @media (max-width: 900px) { .visual-grid { grid-template-columns: 1fr; } }
@@ -193,8 +193,8 @@ body {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 10px;
 }
-.col-header .col-title { font-size: 13px; font-weight: 600; color: #1c1917; }
-.col-header .col-total { font-size: 12px; color: #a8a29e; }
+.col-header .col-title { font-size: 15px; font-weight: 600; color: #1c1917; }
+.col-header .col-total { font-size: 13px; color: #a8a29e; }
 .col-header .col-total.red { color: #dc2626; }
 
 /* Category rows */
@@ -210,9 +210,9 @@ body {
   flex-shrink: 0; font-size: 14px;
 }
 .cat-info { flex: 1; min-width: 0; }
-.cat-name { font-size: 13px; font-weight: 600; color: #1c1917; }
-.cat-sub  { font-size: 11px; color: #a8a29e; margin-top: 1px; }
-.cat-amount { font-size: 13px; font-weight: 600; color: #1c1917; flex-shrink: 0; }
+.cat-name { font-size: 14px; font-weight: 600; color: #1c1917; }
+.cat-sub  { font-size: 12px; color: #a8a29e; margin-top: 2px; }
+.cat-amount { font-size: 14px; font-weight: 600; color: #1c1917; flex-shrink: 0; }
 .cat-amount.red { color: #dc2626; }
 .cat-amount.muted { color: #a8a29e; font-weight: 400; font-style: italic; }
 .chev-btn {
@@ -244,7 +244,7 @@ body {
 }
 .detail-table-wrap {
   background: #f8fbff; border-radius: 8px;
-  font-size: 12px; margin-bottom: 10px; overflow: hidden;
+  font-size: 13px; margin-bottom: 10px; overflow: hidden;
 }
 .detail-table { width: 100%; border-collapse: collapse; }
 .detail-table th {

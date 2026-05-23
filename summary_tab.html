@@ -13,431 +13,375 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #eef3fb;
-  color: #1c1917;
-  font-size: 14px;
-  min-height: 100vh;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #eef3fb; color: #1c1917; font-size: 14px;
+  height: 100vh; overflow: hidden;
 }
 
-/* ── TABS ── */
+/* ── PAGE LAYOUT ── */
+.page-root { display: flex; height: 100vh; overflow: hidden; position: relative; }
+.main-content { flex: 1; overflow-y: auto; min-width: 0; }
+
+/* ── TAB STRIP ── */
 .tab-strip {
   position: sticky; top: 0; z-index: 10;
   background: #fff; border-bottom: 1px solid #dae5f2;
-  padding: 0 28px; display: flex; align-items: stretch;
+  padding: 0 20px; display: flex; align-items: stretch;
 }
 .tab {
-  font-size: 13px; color: #78716c;
-  padding: 13px 14px; cursor: pointer;
-  border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap;
+  font-size: 13px; color: #78716c; padding: 12px 12px;
+  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap;
 }
-.tab.active { color: #1c1917; font-weight: 500; border-bottom: 2px solid #3b82f6; }
+.tab.active { color: #1c1917; font-weight: 600; border-bottom-color: #3b82f6; }
 
 /* ── HOUSEHOLD HEADER ── */
 .hh-header {
   background: #fff; border-bottom: 1px solid #dae5f2;
-  padding: 18px 28px; display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; display: flex; align-items: flex-start; gap: 14px;
 }
 .hh-avatar {
   width: 52px; height: 52px; border-radius: 50%;
   background: #dbeafe; color: #1e40af;
-  font-size: 16px; font-weight: 600;
+  font-size: 16px; font-weight: 700;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.hh-center { flex: 1; }
-.hh-name { font-size: 20px; font-weight: 600; color: #1c1917; }
-.hh-location {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 12px; color: #a8a29e; margin-top: 3px;
-}
-.hh-location i { font-size: 12px; }
-.hh-meta {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; color: #78716c; margin-top: 6px; flex-wrap: wrap;
-}
+.hh-center { flex: 1; min-width: 0; }
+.hh-name { font-size: 20px; font-weight: 700; color: #1c1917; }
+.hh-location { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #78716c; margin-top: 3px; }
+.hh-meta { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #78716c; margin-top: 5px; flex-wrap: wrap; }
 .hh-meta a { color: #3b82f6; text-decoration: none; cursor: pointer; }
-.hh-meta .sep  { color: #d6d3d1; }
-.hh-meta .pipe { color: #d6d3d1; margin: 0 4px; }
-.hh-meta .meta-item { display: flex; align-items: center; gap: 3px; }
-.hh-meta .meta-item i { font-size: 12px; color: #a8a29e; }
-.hh-pills { display: flex; gap: 7px; margin-top: 9px; flex-wrap: wrap; }
-.hh-pill {
-  font-size: 11px; font-weight: 500; padding: 3px 10px;
-  border-radius: 99px; border: 1px solid;
+.hh-meta .sep { color: #d6d3d1; }
+.hh-meta .pipe { color: #d6d3d1; }
+.hh-meta .mi { display: flex; align-items: center; gap: 3px; }
+.hh-meta .mi i { font-size: 11px; color: #a8a29e; }
+.hh-badges { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.hh-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid; }
+.badge-amber { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+.badge-red   { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+.hh-progress { display: flex; align-items: center; gap: 7px; margin-top: 8px; font-size: 12px; }
+.cp-lbl { color: #a8a29e; }
+.progress-track { width: 120px; height: 4px; background: #dae5f2; border-radius: 99px; overflow: hidden; flex-shrink: 0; }
+.progress-fill { height: 100%; background: #3b82f6; border-radius: 99px; }
+.cp-pct { color: #3b82f6; font-weight: 600; }
+.cp-add { color: #3b82f6; cursor: pointer; }
+.hh-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 500; padding: 8px 14px;
+  border-radius: 8px; cursor: pointer; white-space: nowrap; border: none;
+  font-family: inherit;
 }
-.pill-amber-hd  { background: #fef3c7; color: #92400e; border-color: #fde68a; }
-.pill-salmon-hd { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
-.hh-completeness {
-  display: flex; align-items: center; gap: 7px; margin-top: 9px; font-size: 12px;
-}
-.hh-completeness .cp-lbl { color: #a8a29e; }
-.progress-track { width: 130px; height: 4px; background: #dae5f2; border-radius: 99px; overflow: hidden; flex-shrink: 0; }
-.progress-fill  { height: 100%; background: #3b82f6; border-radius: 99px; }
-.hh-completeness .cp-pct { color: #3b82f6; font-weight: 600; }
-.hh-completeness .cp-add { color: #3b82f6; cursor: pointer; }
-.hh-actions { display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
-.btn-primary {
-  background: #3b82f6; color: #fff; font-size: 13px; font-weight: 500;
-  padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer;
-  display: flex; align-items: center; gap: 6px; white-space: nowrap;
-}
-.btn-secondary {
-  background: #fff; color: #1c1917; font-size: 13px;
-  padding: 8px 14px; border-radius: 8px; border: 1px solid #dae5f2; cursor: pointer;
-  display: flex; align-items: center; gap: 6px; white-space: nowrap;
-}
+.btn-primary      { background: #3b82f6; color: #fff; }
+.btn-outline      { background: #fff; color: #1c1917; border: 1px solid #dae5f2; }
+.btn-hazel-filled { background: #1e40af; color: #fff; }
+.btn-hazel-outline { background: #fff; color: #1e40af; border: 1px solid #3b82f6; box-shadow: 0 0 0 2px #bfdbfe; }
 
 /* ── SECTION WRAPPER ── */
-.section-wrap { padding: 16px 28px 0; }
-.section-wrap.last { padding-bottom: 28px; }
+.sw { padding: 12px 20px 0; }
+.sw.last { padding-bottom: 24px; }
 
 /* ── GENERIC CARD ── */
-.card {
-  background: #fff; border: 1px solid #dae5f2; border-radius: 12px; overflow: hidden;
-}
-.card-header {
-  padding: 11px 16px; border-bottom: 1px solid #dae5f2;
+.card { background: #fff; border: 1px solid #dae5f2; border-radius: 12px; overflow: hidden; }
+.card-hdr {
+  padding: 10px 14px; border-bottom: 1px solid #dae5f2;
   display: flex; align-items: center; justify-content: space-between;
 }
-.card-header .ch-left {
+.card-hdr-left {
   display: flex; align-items: center; gap: 6px;
   font-size: 10px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.06em; color: #a8a29e;
 }
-.card-header .ch-left i { font-size: 13px; }
-.card-header .ch-right { font-size: 12px; color: #3b82f6; cursor: pointer; }
-.card-header .ch-right-muted { font-size: 12px; color: #a8a29e; cursor: pointer; }
+.card-hdr-left i { font-size: 13px; }
+.card-hdr-right { font-size: 12px; color: #a8a29e; cursor: pointer; }
 
-/* ── SECTION 3: FOUR-COLUMN VISUAL PANELS ── */
-.visual-grid {
-  display: grid;
-  grid-template-columns: 230px minmax(0,1fr) minmax(0,1fr) minmax(0,1.4fr);
-  gap: 12px;
+/* ── SECTION 3: METRIC CARDS ── */
+.metric-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  padding: 12px 20px 0;
 }
-@media (max-width: 900px) { .visual-grid { grid-template-columns: 1fr; } }
-
-/* Invested accounts table (top panel) */
-.acct-table { width: 100%; border-collapse: collapse; }
-.acct-table th {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.05em; color: #a8a29e;
-  background: #f8fbff; padding: 7px 12px; text-align: left;
-  border-bottom: 1px solid #eef3fb;
-}
-.acct-table td { padding: 10px 12px; border-top: 1px solid #eef3fb; color: #1c1917; vertical-align: middle; font-size: 12px; }
-.acct-table td.amt { text-align: right; font-weight: 600; font-size: 13px; }
-.acct-table td.ytd-pos { text-align: right; color: #16a34a; font-weight: 700; font-size: 13px; }
-.acct-table td.ytd-nil { text-align: right; color: #a8a29e; font-size: 12px; }
-.acct-name-main { font-size: 13px; font-weight: 600; color: #1c1917; }
-.acct-name-sub  { display: block; font-size: 11px; color: #a8a29e; margin-top: 1px; }
-
-/* YTD class reused in balance sheet table too */
-.ytd-pos { color: #16a34a; font-weight: 700; }
-
-/* Metric cards stack */
-.metric-stack { display: flex; flex-direction: column; gap: 8px; }
 .metric-card {
-  background: #f0f5ff; border: 1px solid #dae5f2;
-  border-radius: 10px; padding: 14px 16px;
+  background: #f0f5ff; border: 1px solid #dae5f2; border-radius: 10px; padding: 12px 14px;
 }
-.metric-label {
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.07em; color: #a8a29e;
-}
-.metric-value { font-size: 22px; font-weight: 700; color: #1c1917; margin-top: 3px; }
-.metric-delta { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #16a34a; margin-top: 4px; font-weight: 600; }
-.metric-delta i { font-size: 12px; }
-.metric-sub { font-size: 11px; color: #78716c; margin-top: 3px; line-height: 1.5; }
+.metric-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #a8a29e; }
+.metric-val { font-size: 22px; font-weight: 700; color: #1c1917; margin-top: 3px; }
+.metric-delta { display: flex; align-items: center; gap: 3px; font-size: 11px; color: #16a34a; font-weight: 600; margin-top: 3px; }
+.metric-sub { font-size: 11px; color: #78716c; margin-top: 3px; line-height: 1.4; }
 
+/* ── SECTION 4: VISUAL PANELS ── */
+.visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 /* Net worth bars */
-.bar-row-nw { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.bar-row-nw:last-of-type { margin-bottom: 0; }
-.bar-lbl-nw { font-size: 11px; color: #78716c; text-align: right; width: 105px; flex-shrink: 0; }
-.bar-track-nw { flex: 1; height: 10px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
-.bar-fill-nw  { height: 100%; border-radius: 4px; }
-.bar-amt-nw   { font-size: 11px; font-weight: 600; color: #1c1917; width: 52px; text-align: right; flex-shrink: 0; }
-.nw-total-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-top: 10px; margin-top: 10px; border-top: 1px solid #f0f5ff;
-  font-size: 12px;
-}
-.nw-total-row .nwt-label { color: #78716c; font-weight: 500; }
-.nw-total-row .nwt-val   { font-weight: 700; color: #1c1917; }
-
-/* Allocation donut panel */
-.alloc-panel-inner { padding: 12px 14px; }
-.alloc-panel-sub { font-size: 11px; color: #a8a29e; margin-bottom: 12px; }
+.bars-body { padding: 12px 14px; }
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.bar-row:last-of-type { margin-bottom: 0; }
+.bar-lbl { font-size: 12px; color: #78716c; width: 110px; flex-shrink: 0; text-align: right; }
+.bar-track { flex: 1; height: 8px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
+.bar-fill  { height: 100%; border-radius: 3px; }
+.bar-amt   { font-size: 12px; color: #78716c; width: 52px; text-align: right; flex-shrink: 0; }
+.nw-total-row { display: flex; justify-content: space-between; padding-top: 10px; margin-top: 10px; border-top: 1px solid #f0f5ff; font-size: 13px; font-weight: 700; color: #1c1917; }
+/* Allocation donut */
+.alloc-body { padding: 12px 14px; }
+.alloc-sub  { font-size: 11px; color: #a8a29e; margin-bottom: 10px; }
 .alloc-layout { display: flex; align-items: center; gap: 14px; }
-.alloc-chart-wrap { width: 100px; height: 100px; flex-shrink: 0; }
-.alloc-chart-wrap canvas { width: 100px !important; height: 100px !important; }
-.alloc-rows { display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.alloc-row  { display: flex; align-items: center; gap: 7px; }
+.alloc-canvas-wrap { width: 100px; height: 100px; flex-shrink: 0; }
+.alloc-canvas-wrap canvas { width: 100px !important; height: 100px !important; }
+.alloc-rows { display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.alloc-row  { display: flex; align-items: center; gap: 6px; }
 .alloc-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .alloc-name { font-size: 11px; color: #78716c; flex: 1; }
 .alloc-pct  { font-size: 11px; font-weight: 600; color: #1c1917; }
 .alloc-tgt  { font-size: 10px; color: #a8a29e; }
-.alloc-warn {
-  margin-top: 10px; background: #fef3c7; color: #92400e;
-  border-radius: 6px; padding: 7px 10px; font-size: 11px; line-height: 1.5;
-}
+.alloc-warn { margin-top: 10px; background: #fef3c7; color: #92400e; border-radius: 6px; padding: 6px 10px; font-size: 12px; line-height: 1.5; }
 
-/* ── SECTION 4: BALANCE SHEET ── */
+/* ── SECTION 5: BALANCE SHEET ── */
+.bs-inner { padding: 0 14px; }
 .bs-grid {
-  display: grid;
-  grid-template-columns: minmax(0,3fr) minmax(0,2fr);
-  gap: 12px; padding: 14px 16px;
+  display: grid; grid-template-columns: minmax(0,3fr) minmax(0,2fr);
+  gap: 14px; padding: 12px 0;
 }
 @media (max-width: 900px) { .bs-grid { grid-template-columns: 1fr; } }
-
-.col-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 10px;
+.col-hdr {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #f0f5ff;
 }
-.col-header .col-title { font-size: 15px; font-weight: 600; color: #1c1917; }
-.col-header .col-total { font-size: 13px; color: #a8a29e; }
-.col-header .col-total.red { color: #dc2626; }
-
+.col-hdr-title { font-size: 14px; font-weight: 700; color: #1c1917; }
+.col-hdr-total { font-size: 12px; color: #a8a29e; }
+.col-hdr-total.red { color: #dc2626; }
 /* Category rows */
 .cat-row {
   display: flex; align-items: center; gap: 8px;
-  padding: 7px 0; border-bottom: 1px solid #f0f5ff; cursor: pointer;
+  padding: 8px 0; border-bottom: 1px solid #f0f5ff; cursor: pointer;
 }
-.cat-row:last-of-type { border-bottom: none; }
-.cat-row.no-expand { cursor: default; }
+.cat-row.no-exp { cursor: default; }
+.cat-left { display: flex; align-items: center; gap: 9px; flex: 1; min-width: 0; }
 .cat-icon {
   width: 28px; height: 28px; border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; font-size: 14px;
 }
-.cat-info { flex: 1; min-width: 0; }
 .cat-name { font-size: 14px; font-weight: 600; color: #1c1917; }
-.cat-sub  { font-size: 12px; color: #a8a29e; margin-top: 2px; }
-.cat-amount { font-size: 14px; font-weight: 600; color: #1c1917; flex-shrink: 0; }
-.cat-amount.red { color: #dc2626; }
-.cat-amount.muted { color: #a8a29e; font-weight: 400; font-style: italic; }
+.cat-sub  { font-size: 12px; color: #a8a29e; margin-top: 1px; }
+.cat-right { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.cat-amt { font-size: 14px; font-weight: 600; color: #1c1917; }
+.cat-amt.red    { color: #dc2626; }
+.cat-amt.muted  { color: #a8a29e; font-weight: 400; font-style: italic; }
 .chev-btn {
-  background: none; border: none; cursor: pointer;
-  color: #a8a29e; font-size: 14px; padding: 2px;
-  display: flex; align-items: center;
-  transition: transform 0.15s ease; flex-shrink: 0;
+  width: 22px; height: 22px; border: 1px solid #dae5f2; background: #f8fbff;
+  border-radius: 5px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #a8a29e; font-size: 12px; flex-shrink: 0;
+  transition: transform 0.15s ease;
 }
-
 /* Source badges */
 .src-badge {
-  display: inline-flex; align-items: center;
-  font-size: 10px; font-weight: 600; padding: 2px 7px;
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 11px; font-weight: 600; padding: 2px 8px;
   border-radius: 5px; white-space: nowrap; flex-shrink: 0;
 }
 .src-live    { background: #dcfce7; color: #166534; }
 .src-doc     { background: #fef3c7; color: #92400e; }
 .src-manual  { background: #f0f5ff; color: #3b52a0; }
 .src-missing {
-  background: transparent; border: 1px dashed #c9d8f0;
-  color: #a8a29e; cursor: pointer; border-radius: 5px;
-  font-size: 10px; font-weight: 600; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;
+  background: transparent; border: 1px dashed #c9d8f0; color: #a8a29e;
+  cursor: pointer; font-size: 11px; font-weight: 600;
+  padding: 2px 8px; border-radius: 5px; white-space: nowrap; flex-shrink: 0;
+  font-family: inherit;
 }
-
 /* Detail tables */
-.cat-detail {
-  overflow: hidden; max-height: 0;
-  transition: max-height 0.2s ease;
-}
-.detail-table-wrap {
-  background: #f8fbff; border-radius: 8px;
-  font-size: 13px; margin-bottom: 10px; overflow: hidden;
-}
-.detail-table { width: 100%; border-collapse: collapse; }
+.cat-detail { display: none; }
+.detail-wrap { background: #f8fbff; border-radius: 8px; overflow: hidden; margin-bottom: 6px; margin-top: 2px; }
+.detail-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .detail-table th {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.05em; color: #a8a29e;
-  background: #f0f5ff; padding: 7px 12px; text-align: left;
+  background: #f0f5ff; font-size: 11px; font-weight: 500; color: #a8a29e;
+  text-transform: uppercase; padding: 7px 10px; text-align: left;
 }
-.detail-table td {
-  padding: 7px 10px; border-top: 1px solid #eef3fb; color: #1c1917;
-}
-.detail-table td.muted { color: #a8a29e; }
-.detail-table td.green { color: #16a34a; font-weight: 600; }
-.detail-table td.right { text-align: right; font-weight: 600; }
-.detail-table td .acct-sub { display: block; font-size: 10px; color: #a8a29e; margin-top: 1px; }
-.detail-placeholder {
-  padding: 14px 14px; font-size: 12px; color: #a8a29e;
-  background: #f8fbff; border-radius: 8px; margin-bottom: 10px;
-  line-height: 1.5;
-}
+.detail-table td { padding: 7px 10px; border-bottom: 1px solid #f0f5ff; color: #1c1917; vertical-align: middle; }
+.detail-table tr:last-child td { border-bottom: none; }
+.detail-table .td-right { text-align: right; font-weight: 600; }
+.acct-sub  { display: block; font-size: 10px; color: #a8a29e; margin-top: 1px; }
+.td-green  { color: #16a34a; font-weight: 600; }
 .detail-callout {
-  background: #fef3c7; border-radius: 6px;
-  padding: 8px 10px; font-size: 11px; color: #92400e;
-  line-height: 1.5; margin-bottom: 10px; display: flex; gap: 6px;
+  background: #fef3c7; color: #92400e;
+  padding: 7px 10px; font-size: 12px; line-height: 1.5;
+  border-top: 1px solid #fde68a;
 }
-.detail-callout i { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
-
-/* Net worth calc block */
-.nw-calc {
-  background: #f0f5ff; border-radius: 8px; padding: 12px 14px;
-  margin-top: 14px; font-size: 13px;
-}
-.nw-calc-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 3px 0; color: #78716c;
-}
-.nw-calc-row .nwc-label { font-size: 12px; }
-.nw-calc-row .nwc-val   { font-size: 12px; font-weight: 500; }
-.nw-calc-divider { border: none; border-top: 1px solid #dae5f2; margin: 8px 0; }
-.nw-calc-total  {
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 14px; font-weight: 600; color: #1c1917; padding-top: 2px;
-}
-
-/* Coverage table */
-.coverage-section { margin-top: 14px; }
-.cov-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 8px;
-}
-.cov-header-left {
+/* Net worth calc */
+.nw-calc { background: #f0f5ff; border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
+.nw-calc-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 12px; color: #78716c; }
+.nw-calc-div { border: none; border-top: 1px solid #dae5f2; margin: 6px 0; }
+.nw-calc-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; color: #1c1917; padding-top: 2px; }
+/* Coverage */
+.cov-section { border-top: 1px solid #f0f5ff; padding: 12px 0; margin-top: 0; }
+.cov-section-lbl {
   display: flex; align-items: center; gap: 5px;
   font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #a8a29e;
+  letter-spacing: 0.06em; color: #a8a29e; margin-bottom: 10px;
 }
-.cov-header-left i { font-size: 13px; }
+.cov-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.cov-card { background: #f8fbff; border: 1px solid #dae5f2; border-radius: 8px; padding: 10px 12px; }
+.cov-card.gap-card { background: #fff8f8; border-color: #fca5a5; }
+.cov-card-top { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
+.cov-icon { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+.cov-name { font-size: 13px; font-weight: 600; color: #1c1917; }
+.cov-detail-ok  { font-size: 12px; color: #44403c; margin: 4px 0; }
+.cov-detail-gap { font-size: 12px; color: #dc2626; margin: 4px 0; }
+.cov-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.cov-in-place { background: #dcfce7; color: #166534; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 6px; }
 .cov-gap-badge {
-  display: flex; align-items: center; gap: 4px;
-  background: #fee2e2; color: #991b1b;
-  font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 6px;
-}
-.cov-col-headers {
-  display: grid;
-  grid-template-columns: minmax(0,1.5fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr);
-  padding: 5px 0; border-bottom: 1px solid #eef3fb;
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: #a8a29e;
-}
-.cov-table-row {
-  display: grid;
-  grid-template-columns: minmax(0,1.5fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr);
-  padding: 9px 0; border-bottom: 1px solid #f0f5ff; align-items: center;
-}
-.cov-table-row:last-child { border-bottom: none; }
-.cov-type-name { font-size: 13px; font-weight: 600; color: #1c1917; }
-.cov-type-sub  { font-size: 11px; color: #a8a29e; margin-top: 1px; }
-.cov-detail-text { font-size: 12px; color: #44403c; }
-.cov-detail-red  { font-size: 12px; color: #dc2626; font-weight: 500; }
-.cov-in-place-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: #dcfce7; color: #166534;
-  font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 6px;
-}
-.cov-gap-sev {
-  display: inline-flex; flex-direction: column; align-items: center;
-  background: #fee2e2; color: #991b1b;
-  font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 6px;
-  line-height: 1.3; text-align: center;
+  background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 600;
+  padding: 4px 9px; border-radius: 6px; cursor: pointer;
+  border: none; font-family: inherit;
 }
 
-/* Alert cards (section 3 col D) */
-.alert-stack { display: flex; flex-direction: column; gap: 8px; }
-.alert-card { border-radius: 10px; padding: 14px 16px; }
+/* ── SECTION 6: DATA ALERTS ── */
+.alert-card { border-radius: 8px; padding: 12px 14px; }
+.alert-card + .alert-card { margin-top: 8px; }
 .alert-conflict { background: #fff7ed; border: 1px solid #fed7aa; }
 .alert-missing  { background: #eff6ff; border: 1px solid #bfdbfe; }
-.alert-title { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; margin-bottom: 7px; }
+.alert-title {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; margin-bottom: 6px;
+}
 .alert-conflict .alert-title { color: #c2410c; }
 .alert-missing  .alert-title { color: #1d4ed8; }
 .alert-body { font-size: 12px; color: #57534e; line-height: 1.6; }
-.alert-link { font-size: 12px; font-weight: 600; margin-top: 8px; display: inline-block; cursor: pointer; text-decoration: underline; }
+.alert-link { font-size: 12px; font-weight: 600; margin-top: 7px; display: inline-block; cursor: pointer; text-decoration: underline; }
 .alert-conflict .alert-link { color: #c2410c; }
 .alert-missing  .alert-link { color: #1d4ed8; }
 
-/* Source update option */
-.src-with-update { display: inline-flex; align-items: center; gap: 6px; }
-.src-update { font-size: 10px; color: #3b82f6; cursor: pointer; white-space: nowrap; }
-
-/* ── SECTIONS 5+6: BOTTOM TWO-COLUMN GRID ── */
-.bottom-grid {
-  display: grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-  gap: 12px;
-}
-@media (max-width: 900px) { .bottom-grid { grid-template-columns: 1fr; } }
-
-.kt-body { padding: 14px 16px; }
-.kt-section-gap { margin-top: 16px; padding-top: 14px; border-top: 1px solid #f0f5ff; }
-
-.kt-row {
-  display: flex; align-items: flex-start;
-  padding: 9px 0; border-bottom: 1px solid #f0f5ff; gap: 10px;
-}
+/* ── SECTION 7: KNOW THEM ── */
+.kt-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 20px; padding: 14px; }
+@media (max-width: 640px) { .kt-grid { grid-template-columns: 1fr; } }
+.kt-row { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f5ff; }
 .kt-row:last-child { border-bottom: none; }
-.kt-key {
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.05em; color: #a8a29e;
-  width: 80px; flex-shrink: 0; padding-top: 3px;
-}
+.kt-key { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #a8a29e; width: 95px; flex-shrink: 0; padding-top: 4px; line-height: 1.4; }
 .kt-chips { display: flex; flex-wrap: wrap; gap: 5px; flex: 1; }
-
-/* Pills */
-.pill {
-  display: inline-flex; align-items: center;
-  font-size: 11px; padding: 3px 9px; border-radius: 99px; border: 1px solid; white-space: nowrap;
-}
+.pill { display: inline-flex; align-items: center; font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 20px; border: 1px solid; white-space: nowrap; }
 .pill-gray  { background: #f5f4f1; color: #44403c; border-color: #e7e5e0; }
 .pill-amber { background: #fef3c7; color: #92400e; border-color: #fde68a; }
 .pill-blue  { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
 .pill-green { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
 .pill-pink  { background: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
+.narrative   { font-size: 13px; color: #44403c; line-height: 1.6; margin-bottom: 7px; }
+.narrative-ts { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #a8a29e; }
+.last-convo  { background: #f8f8f6; border: 1px solid #e7e5e0; border-radius: 8px; padding: 12px; margin-top: 10px; }
+.lc-hdr  { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+.lc-title { font-size: 12px; font-weight: 700; color: #1c1917; }
+.lc-meta  { font-size: 11px; color: #a8a29e; }
+.lc-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+.lc-body  { font-size: 12px; color: #57534e; line-height: 1.5; }
+.lc-themes { font-size: 11px; color: #a8a29e; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e7e5e0; }
+.lc-themes strong { color: #78716c; }
 
-/* Narrative */
-.narrative-text { font-size: 13px; color: #44403c; line-height: 1.6; }
-.narrative-ts {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 11px; color: #a8a29e; margin-top: 10px;
-}
-.narrative-ts i { font-size: 11px; }
-
-/* Last conversation */
-.last-convo {
-  margin-top: 14px;
-  background: #f8f8f6; border: 1px solid #e7e5e0; border-radius: 8px; padding: 12px;
-}
-.last-convo-hdr {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
-}
-.last-convo-title { font-size: 12px; font-weight: 600; color: #1c1917; }
-.last-convo-meta  { font-size: 11px; color: #a8a29e; }
-.last-convo-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 9px; }
-.last-convo-body  { font-size: 12px; color: #57534e; line-height: 1.6; }
-.last-convo-divider { border: none; border-top: 1px solid #e7e5e0; margin: 9px 0; }
-.last-convo-themes  { font-size: 11px; color: #a8a29e; line-height: 1.6; }
-.last-convo-themes strong { color: #78716c; font-weight: 600; }
-
-/* ── SECTION 6: HAZEL INSIGHTS ── */
-.hz-row {
-  display: flex; align-items: flex-start;
-  padding: 14px 16px; border-bottom: 1px solid #f0f5ff; gap: 12px;
-}
+/* ── SECTION 8: HAZEL INSIGHTS ── */
+.hz-hdr { padding: 10px 14px; border-bottom: 1px solid #dae5f2; display: flex; align-items: center; justify-content: space-between; }
+.hz-hdr-left { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; color: #1c1917; }
+.hz-hdr-left i { color: #3b82f6; font-size: 15px; }
+.opps-pill { background: #dbeafe; color: #1e40af; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 6px; }
+.hz-row { display: flex; gap: 12px; align-items: flex-start; padding: 10px 14px; border-bottom: 1px solid #f0f5ff; }
 .hz-row:last-child { border-bottom: none; }
-.hz-circle {
-  width: 30px; height: 30px; border-radius: 50%; background: #f0ede8;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-}
-.hz-circle i { font-size: 14px; color: #78716c; }
-.hz-body { flex: 1; }
+.hz-circle { width: 28px; height: 28px; border-radius: 50%; background: #f0ede8; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.hz-circle i { font-size: 13px; color: #78716c; }
+.hz-body  { flex: 1; }
 .hz-title { font-size: 14px; font-weight: 600; color: #1c1917; }
-.hz-desc  { font-size: 12px; color: #78716c; margin-top: 3px; line-height: 1.55; }
-.hz-link  { font-size: 12px; color: #3b82f6; margin-top: 5px; display: inline-block; cursor: pointer; }
-.sev-badge {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px;
-  flex-shrink: 0; margin-top: 2px; white-space: nowrap;
-}
+.hz-desc  { font-size: 12px; color: #78716c; margin-top: 3px; line-height: 1.5; }
+.hz-link  { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #3b82f6; margin-top: 5px; cursor: pointer; }
+.hz-link i { font-size: 10px; }
+.sev-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; white-space: nowrap; margin-top: 2px; }
 .sev-high   { background: #fee2e2; color: #991b1b; }
 .sev-medium { background: #fef3c7; color: #92400e; }
-.opps-badge { background: #dbeafe; color: #1e40af; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 6px; }
+
+/* ── DRAWER ── */
+.drawer {
+  width: 320px; flex-shrink: 0;
+  background: #fff; border-left: 1px solid #dae5f2;
+  display: flex; flex-direction: column;
+  overflow: hidden; transition: width 0.22s ease;
+}
+.drawer.closed { width: 0; border-left: none; }
+.dr-hdr {
+  padding: 12px 14px 10px; border-bottom: 1px solid #f0f5ff;
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.dr-hdr-left { display: flex; align-items: center; gap: 7px; }
+.dr-sparkles  { font-size: 16px; color: #1e40af; }
+.dr-title     { font-size: 13px; font-weight: 700; color: #1c1917; }
+.dr-hh-pill   { background: #dbeafe; color: #1e40af; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+.dr-close     { width: 24px; height: 24px; border: 1px solid #dae5f2; border-radius: 5px; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #78716c; }
+.dr-ctx {
+  padding: 7px 14px; background: #f0f5ff; border-bottom: 1px solid #dae5f2;
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: #3b52a0; flex-shrink: 0; line-height: 1.4;
+}
+.dr-ctx i { font-size: 11px; flex-shrink: 0; }
+.dr-tabs { padding: 8px 14px 0; display: flex; gap: 6px; flex-shrink: 0; border-bottom: 1px solid #f0f5ff; }
+.dr-tab { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 99px; border: 1px solid #dae5f2; background: #fff; color: #78716c; cursor: pointer; margin-bottom: 8px; font-family: inherit; }
+.dr-tab.active { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; font-weight: 600; }
+.dr-content { flex: 1; overflow-y: auto; padding: 12px 14px; display: flex; flex-direction: column; min-height: 0; }
+/* Empty state */
+.de-center { text-align: center; padding: 12px 4px 16px; }
+.de-icon-wrap { width: 36px; height: 36px; border-radius: 50%; background: #dbeafe; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+.de-icon-wrap i { font-size: 16px; color: #1e40af; }
+.de-title { font-size: 13px; font-weight: 700; color: #1c1917; margin-bottom: 5px; }
+.de-sub   { font-size: 11px; color: #a8a29e; line-height: 1.5; margin-bottom: 14px; }
+.de-qs    { display: flex; flex-direction: column; gap: 6px; }
+.de-q {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #fff; border: 1px solid #dae5f2; border-radius: 8px;
+  padding: 8px 10px; font-size: 12px; color: #1e40af; cursor: pointer;
+  text-align: left; width: 100%; font-family: inherit; line-height: 1.4;
+}
+.de-q i { font-size: 12px; flex-shrink: 0; margin-left: 6px; }
+.de-q:hover { background: #f0f5ff; }
+/* Pre-filled state */
+.dp-banner {
+  background: #fef3c7; border: 1px solid #fde68a; border-radius: 8px;
+  padding: 7px 10px; font-size: 11px; color: #92400e;
+  display: flex; align-items: flex-start; gap: 5px; margin-bottom: 12px; line-height: 1.5;
+}
+.dp-banner i { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+/* Conversation */
+.dc-msgs { display: flex; flex-direction: column; gap: 10px; }
+.dc-user-wrap  { display: flex; justify-content: flex-end; }
+.dc-user-bubble { background: #1e40af; color: #fff; border-radius: 8px 0 8px 8px; padding: 8px 10px; font-size: 12px; max-width: 220px; line-height: 1.5; }
+.dc-hazel-wrap { display: flex; align-items: flex-start; gap: 7px; }
+.dc-hazel-av   { width: 20px; height: 20px; border-radius: 50%; background: #1e40af; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.dc-hazel-av i { font-size: 10px; color: #fff; }
+.dc-hazel-bubble { background: #f0f5ff; border: 1px solid #dae5f2; border-radius: 0 8px 8px 8px; padding: 8px 10px; font-size: 12px; max-width: 220px; line-height: 1.5; color: #1c1917; }
+.dc-hazel-bubble ul { padding-left: 14px; margin-top: 4px; }
+.dc-hazel-bubble li { margin-bottom: 3px; }
+/* Input area */
+.dr-input { padding: 10px 14px; border-top: 1px solid #f0f5ff; flex-shrink: 0; }
+.dr-input-row { display: flex; gap: 8px; align-items: flex-end; }
+.dr-textarea {
+  flex: 1; border: 1px solid #dae5f2; border-radius: 8px; padding: 8px 10px;
+  font-size: 12px; background: #f8fbff; resize: none; font-family: inherit; line-height: 1.4;
+}
+.dr-textarea:focus { outline: none; border-color: #3b82f6; background: #fff; }
+.dr-send { width: 32px; height: 32px; background: #3b82f6; border: none; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.dr-send i { font-size: 14px; color: #fff; }
+.dr-hint { font-size: 10px; color: #a8a29e; text-align: center; margin-top: 5px; line-height: 1.4; }
+
+/* ── REOPEN TAB ── */
+.reopen-tab {
+  position: fixed; right: 0; top: 50%; transform: translateY(-50%);
+  background: #1e40af; color: #fff;
+  writing-mode: vertical-rl; text-orientation: mixed;
+  font-size: 12px; font-weight: 600; padding: 16px 8px;
+  border-radius: 8px 0 0 8px; cursor: pointer;
+  display: none; flex-direction: column; align-items: center; gap: 8px; z-index: 20;
+}
+.reopen-tab i { writing-mode: horizontal-tb; font-size: 14px; margin-bottom: 4px; }
 </style>
 </head>
 <body>
 
-<!-- ══ SECTION 1: TAB STRIP ══ -->
+<div class="page-root" id="pageRoot">
+
+<!-- ══════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════ -->
+<div class="main-content" id="mainContent">
+
+<!-- § 1  TAB STRIP -->
 <div class="tab-strip" role="tablist">
   <div class="tab active" role="tab" aria-selected="true">Summary</div>
   <div class="tab" role="tab">Meetings</div>
@@ -448,37 +392,26 @@ body {
   <div class="tab" role="tab">Chat</div>
 </div>
 
-<!-- ══ SECTION 2: HOUSEHOLD HEADER ══ -->
+<!-- § 2  HOUSEHOLD HEADER -->
 <div class="hh-header">
   <div class="hh-avatar" aria-label="Thornton Household">TH</div>
   <div class="hh-center">
     <div class="hh-name">Thornton Household</div>
-    <div class="hh-location">
-      <i class="ti ti-map-pin" aria-hidden="true"></i>
-      San Francisco, CA
-    </div>
+    <div class="hh-location"><i class="ti ti-map-pin"></i>San Francisco, CA</div>
     <div class="hh-meta">
-      <a>Robert Thornton</a>
-      <span class="sep">·</span>
-      <a>Linda Thornton</a>
+      <a>Robert Thornton</a><span class="sep">·</span><a>Linda Thornton</a>
       <span class="pipe">|</span>
-      <div class="meta-item">
-        <i class="ti ti-calendar" aria-hidden="true"></i>
-        Last met Apr 28
-      </div>
+      <span class="mi"><i class="ti ti-calendar"></i>Last met Apr 28</span>
       <span class="pipe">|</span>
-      <div class="meta-item">
-        <i class="ti ti-calendar" aria-hidden="true"></i>
-        Next Jun 15
-      </div>
+      <span class="mi"><i class="ti ti-calendar"></i>Next Jun 15</span>
     </div>
-    <div class="hh-pills">
-      <span class="hh-pill pill-amber-hd">3 active situations</span>
-      <span class="hh-pill pill-salmon-hd">2 open items</span>
+    <div class="hh-badges">
+      <span class="hh-badge badge-amber">3 active situations</span>
+      <span class="hh-badge badge-red">2 open items</span>
     </div>
-    <div class="hh-completeness">
+    <div class="hh-progress">
       <span class="cp-lbl">Profile completeness</span>
-      <div class="progress-track" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="Profile 62% complete">
+      <div class="progress-track" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-fill" style="width:62%"></div>
       </div>
       <span class="cp-pct">62%</span>
@@ -486,511 +419,594 @@ body {
     </div>
   </div>
   <div class="hh-actions">
-    <button class="btn-primary"><i class="ti ti-wand" aria-hidden="true"></i>Prep meeting</button>
-    <button class="btn-secondary"><i class="ti ti-mail" aria-hidden="true"></i>Draft email</button>
-    <button class="btn-secondary"><i class="ti ti-upload" aria-hidden="true"></i>Upload doc</button>
+    <button class="btn btn-hazel-filled" id="hazelToggleBtn" onclick="toggleDrawer()">
+      <i class="ti ti-sparkles"></i>Close Hazel
+    </button>
+    <button class="btn btn-primary"><i class="ti ti-wand"></i>Prep meeting</button>
+    <button class="btn btn-outline"><i class="ti ti-mail"></i>Draft email</button>
+    <button class="btn btn-outline"><i class="ti ti-upload"></i>Upload doc</button>
   </div>
 </div>
 
-<!-- ══ SECTION 3: THREE-COLUMN VISUAL PANELS ══ -->
-<div class="section-wrap">
+<!-- § 3  METRIC CARDS -->
+<div class="metric-grid">
+  <div class="metric-card">
+    <div class="metric-lbl">Net Worth</div>
+    <div class="metric-val">$3,052,000</div>
+    <div class="metric-delta"><i class="ti ti-trending-up"></i>+$85k since Jan</div>
+    <div class="metric-sub">Assets $3.47M · Liabilities $420k</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-lbl">Household Income</div>
+    <div class="metric-val">$320,000</div>
+    <div class="metric-sub">Robert $180k · Linda $140k</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-lbl">AUM With Firm</div>
+    <div class="metric-val">$1,800,000</div>
+    <div class="metric-sub">Altruist custodied</div>
+  </div>
+</div>
+
+<!-- § 4  VISUAL PANELS -->
+<div class="sw">
   <div class="visual-grid">
 
-    <!-- Column A: Metric cards stacked -->
-    <div class="metric-stack">
-      <div class="metric-card">
-        <div class="metric-label">Net Worth</div>
-        <div class="metric-value">$3,052,000</div>
-        <div class="metric-delta"><i class="ti ti-trending-up" aria-hidden="true"></i>+$85k since Jan</div>
-        <div class="metric-sub">Assets $3.47M · Liabilities $420k</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Household Income</div>
-        <div class="metric-value">$320,000</div>
-        <div class="metric-sub">Robert $180k · Linda $140k</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">AUM With Firm</div>
-        <div class="metric-value">$1,800,000</div>
-        <div class="metric-sub">Altruist custodied · Live</div>
-      </div>
-    </div>
-
-    <!-- Column B: Net worth bars -->
+    <!-- 4A Net worth by category -->
     <div class="card">
-      <div class="card-header">
-        <div class="ch-left"><i class="ti ti-chart-bar" aria-hidden="true"></i>Net worth by category</div>
+      <div class="card-hdr">
+        <div class="card-hdr-left"><i class="ti ti-chart-bar"></i>Net worth by category</div>
       </div>
-      <div style="padding:14px 16px;">
-        <div class="bar-row-nw">
-          <div class="bar-lbl-nw">Invested assets</div>
-          <div class="bar-track-nw"><div class="bar-fill-nw" style="width:59%;background:#3b82f6;"></div></div>
-          <div class="bar-amt-nw">$1.80M</div>
+      <div class="bars-body">
+        <div class="bar-row">
+          <div class="bar-lbl">Invested assets</div>
+          <div class="bar-track"><div class="bar-fill" style="width:59%;background:#3b82f6;"></div></div>
+          <div class="bar-amt">$1.80M</div>
         </div>
-        <div class="bar-row-nw">
-          <div class="bar-lbl-nw">Real estate</div>
-          <div class="bar-track-nw"><div class="bar-fill-nw" style="width:31%;background:#3b82f6;"></div></div>
-          <div class="bar-amt-nw">$950k</div>
+        <div class="bar-row">
+          <div class="bar-lbl">Real estate</div>
+          <div class="bar-track"><div class="bar-fill" style="width:31%;background:#3b82f6;"></div></div>
+          <div class="bar-amt">$950k</div>
         </div>
-        <div class="bar-row-nw">
-          <div class="bar-lbl-nw">Business equity</div>
-          <div class="bar-track-nw"><div class="bar-fill-nw" style="width:10%;background:#3b82f6;"></div></div>
-          <div class="bar-amt-nw">$300k</div>
+        <div class="bar-row">
+          <div class="bar-lbl">Business equity</div>
+          <div class="bar-track"><div class="bar-fill" style="width:10%;background:#3b82f6;"></div></div>
+          <div class="bar-amt">$300k</div>
         </div>
-        <div class="bar-row-nw">
-          <div class="bar-lbl-nw">Liabilities</div>
-          <div class="bar-track-nw"><div class="bar-fill-nw" style="width:14%;background:#fca5a5;"></div></div>
-          <div class="bar-amt-nw" style="color:#dc2626;">−$420k</div>
+        <div class="bar-row">
+          <div class="bar-lbl">Liabilities</div>
+          <div class="bar-track"><div class="bar-fill" style="width:14%;background:#fca5a5;"></div></div>
+          <div class="bar-amt" style="color:#991b1b;">−$420k</div>
         </div>
         <div class="nw-total-row">
-          <span class="nwt-label">Net worth</span>
-          <span class="nwt-val">$3,052,000</span>
+          <span>Net worth</span><span>$3,052,000</span>
         </div>
       </div>
     </div>
 
-    <!-- Column C: Allocation donut -->
+    <!-- 4B Asset allocation vs. target -->
     <div class="card">
-      <div class="card-header">
-        <div class="ch-left"><i class="ti ti-chart-donut" aria-hidden="true"></i>Asset allocation vs. target</div>
+      <div class="card-hdr">
+        <div class="card-hdr-left"><i class="ti ti-chart-donut"></i>Asset allocation vs. target</div>
       </div>
-      <div class="alloc-panel-inner">
-        <div class="alloc-panel-sub">$1.8M invested</div>
+      <div class="alloc-body">
+        <div class="alloc-sub">$1.8M invested</div>
         <div class="alloc-layout">
-          <div class="alloc-chart-wrap">
+          <div class="alloc-canvas-wrap">
             <canvas id="allocChart" aria-label="Asset allocation donut chart" role="img"></canvas>
           </div>
           <div class="alloc-rows">
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#3b82f6;"></div>
-              <div class="alloc-name">Equities</div>
-              <div class="alloc-pct">68%</div>
-              <div class="alloc-tgt">vs 65%</div>
-            </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#a78bfa;"></div>
-              <div class="alloc-name">Fixed income</div>
-              <div class="alloc-pct">18%</div>
-              <div class="alloc-tgt">vs 25%</div>
-            </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#34d399;"></div>
-              <div class="alloc-name">Alternatives</div>
-              <div class="alloc-pct">9%</div>
-              <div class="alloc-tgt">vs 5%</div>
-            </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#a8a29e;"></div>
-              <div class="alloc-name">Cash</div>
-              <div class="alloc-pct">5%</div>
-              <div class="alloc-tgt">vs 5%</div>
-            </div>
+            <div class="alloc-row"><div class="alloc-dot" style="background:#3b82f6;"></div><div class="alloc-name">Equities</div><div class="alloc-pct">68%</div><div class="alloc-tgt">vs 65%</div></div>
+            <div class="alloc-row"><div class="alloc-dot" style="background:#a78bfa;"></div><div class="alloc-name">Fixed income</div><div class="alloc-pct">18%</div><div class="alloc-tgt">vs 25%</div></div>
+            <div class="alloc-row"><div class="alloc-dot" style="background:#34d399;"></div><div class="alloc-name">Alternatives</div><div class="alloc-pct">9%</div><div class="alloc-tgt">vs 5%</div></div>
+            <div class="alloc-row"><div class="alloc-dot" style="background:#a8a29e;"></div><div class="alloc-name">Cash</div><div class="alloc-pct">5%</div><div class="alloc-tgt">vs 5%</div></div>
           </div>
         </div>
-        <div class="alloc-warn">
-          Underweight fixed income by 7 pts — consider rebalancing before retirement glide path
-        </div>
-      </div>
-    </div>
-
-    <!-- Column D: Alerts -->
-    <div class="alert-stack">
-      <div class="alert-card alert-conflict">
-        <div class="alert-title"><i class="ti ti-alert-circle" aria-hidden="true"></i>Data conflict detected</div>
-        <div class="alert-body">Beneficiary on the revocable trust (Linda Thornton, estate docs 2023) does not match the investment account beneficiary on file (Robert's estate, 2019 designation).</div>
-        <div class="alert-link">Resolve conflict →</div>
-      </div>
-      <div class="alert-card alert-missing">
-        <div class="alert-title"><i class="ti ti-file-plus" aria-hidden="true"></i>Missing document</div>
-        <div class="alert-body">No long-term care (LTC) insurance policy documents on file. Hazel flagged this as a planning gap — adding documentation would help confirm coverage status.</div>
-        <div class="alert-link">Send document request →</div>
+        <div class="alloc-warn">Underweight fixed income by 7 pts — rebalance before retirement glide path</div>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- ══ SECTION 4: BALANCE SHEET ══ -->
-<div class="section-wrap">
+<!-- § 5  BALANCE SHEET -->
+<div class="sw">
   <div class="card">
-    <div class="card-header">
-      <div class="ch-left"><i class="ti ti-building-bank" aria-hidden="true"></i>Balance Sheet</div>
+    <div class="card-hdr">
+      <div class="card-hdr-left"><i class="ti ti-building-bank"></i>Balance Sheet</div>
     </div>
-    <div class="bs-grid">
+    <div class="bs-inner">
+      <div class="bs-grid">
 
-      <!-- ASSETS COLUMN -->
-      <div>
-        <div class="col-header">
-          <span class="col-title">Assets</span>
-          <span class="col-total">$3,472,000 total</span>
-        </div>
+        <!-- 5A: ASSETS -->
+        <div>
+          <div class="col-hdr">
+            <span class="col-hdr-title">Assets</span>
+            <span class="col-hdr-total">$3,472,000 total</span>
+          </div>
 
-        <!-- Invested assets -->
-        <div class="cat-row" onclick="toggleCat('invested')" aria-expanded="false">
-          <div class="cat-icon" style="background:#dbeafe;"><i class="ti ti-trending-up" style="color:#3b82f6;" aria-hidden="true"></i></div>
-          <div class="cat-info">
-            <div class="cat-name">Invested assets</div>
-            <div class="cat-sub">4 accounts · Altruist custodied</div>
-          </div>
-          <span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span>
-          <span class="cat-amount">$1,800,000</span>
-          <button class="chev-btn" id="chev-invested" aria-label="Expand invested assets"><i class="ti ti-chevron-down"></i></button>
-        </div>
-        <div class="cat-detail" id="detail-invested">
-          <div class="detail-table-wrap" style="margin-top:6px;">
-            <table class="detail-table">
-              <thead>
-                <tr>
-                  <th>Account</th>
-                  <th style="text-align:right;">Value</th>
-                  <th style="text-align:right;">YTD</th>
-                  <th>Source</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Robert — IRA<span class="acct-sub">Rollover IRA</span></td>
-                  <td class="right">$485,000</td>
-                  <td class="right ytd-pos">+7.2%</td>
-                  <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
-                </tr>
-                <tr>
-                  <td>Joint brokerage<span class="acct-sub">Taxable</span></td>
-                  <td class="right">$620,000</td>
-                  <td class="right ytd-pos">+8.1%</td>
-                  <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
-                </tr>
-                <tr>
-                  <td>Linda — Roth IRA<span class="acct-sub">Roth IRA</span></td>
-                  <td class="right">$300,000</td>
-                  <td class="right ytd-pos">+9.3%</td>
-                  <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;margin-right:2px;" aria-hidden="true"></i>Altruist</span></td>
-                </tr>
-                <tr>
-                  <td>Linda — 401(k)<span class="acct-sub">Fidelity · held-away</span></td>
-                  <td class="right">$395,000</td>
-                  <td class="right muted">—</td>
-                  <td><span class="src-badge src-doc">Jan 25</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Real estate -->
-        <div class="cat-row" onclick="toggleCat('realestate')" aria-expanded="false">
-          <div class="cat-icon" style="background:#dbeafe;"><i class="ti ti-home" style="color:#3b82f6;" aria-hidden="true"></i></div>
-          <div class="cat-info">
-            <div class="cat-name">Real estate</div>
-            <div class="cat-sub">Primary residence · San Francisco</div>
-          </div>
-          <div class="src-with-update"><span class="src-badge src-doc">Appraisal · 2023</span><span class="src-update">Update</span></div>
-          <span class="cat-amount">$950,000</span>
-          <button class="chev-btn" id="chev-realestate" aria-label="Expand real estate"><i class="ti ti-chevron-down"></i></button>
-        </div>
-        <div class="cat-detail" id="detail-realestate">
-          <div class="detail-table-wrap" style="margin-top:6px;">
-            <table class="detail-table">
-              <thead><tr><th>Property</th><th>Source</th><th></th><th style="text-align:right;">Value</th></tr></thead>
-              <tbody>
-                <tr>
-                  <td>2847 Maple St, SF<span class="acct-sub">Primary residence</span></td>
-                  <td><span class="src-badge src-doc">Appraisal · 2023</span></td>
-                  <td class="muted">—</td>
-                  <td class="right">$950,000</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Business equity -->
-        <div class="cat-row" onclick="toggleCat('business')" aria-expanded="false">
-          <div class="cat-icon" style="background:#dbeafe;"><i class="ti ti-briefcase" style="color:#3b82f6;" aria-hidden="true"></i></div>
-          <div class="cat-info">
-            <div class="cat-name">Business equity</div>
-            <div class="cat-sub">Robert's marketing agency</div>
-          </div>
-          <div class="src-with-update"><span class="src-badge src-doc">Valuation · 2023</span><span class="src-update">Update</span></div>
-          <span class="cat-amount">$300,000</span>
-          <button class="chev-btn" id="chev-business" aria-label="Expand business equity"><i class="ti ti-chevron-down"></i></button>
-        </div>
-        <div class="cat-detail" id="detail-business">
-          <div class="detail-table-wrap" style="margin-top:6px;">
-            <table class="detail-table">
-              <thead><tr><th>Entity</th><th>Source</th><th>Exit timeline</th><th style="text-align:right;">Value</th></tr></thead>
-              <tbody>
-                <tr>
-                  <td>Thornton Marketing LLC<span class="acct-sub">100% ownership</span></td>
-                  <td><span class="src-badge src-doc">Valuation · 2023</span></td>
-                  <td class="muted">3–5 yrs</td>
-                  <td class="right">$300,000</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Other assets -->
-        <div class="cat-row" onclick="toggleCat('other')" aria-expanded="false" style="border-bottom:none;">
-          <div class="cat-icon" style="background:#dbeafe;"><i class="ti ti-dots" style="color:#3b82f6;" aria-hidden="true"></i></div>
-          <div class="cat-info">
-            <div class="cat-name">Other assets</div>
-            <div class="cat-sub">Checking, savings, vehicles</div>
-          </div>
-          <button class="src-missing" onclick="event.stopPropagation()">+ Add file</button>
-          <span class="cat-amount muted">Unknown</span>
-          <button class="chev-btn" id="chev-other" aria-label="Expand other assets"><i class="ti ti-chevron-down"></i></button>
-        </div>
-        <div class="cat-detail" id="detail-other">
-          <div class="detail-placeholder">
-            Upload bank statements or connect held-away accounts to see this data.
-          </div>
-        </div>
-      </div>
-
-      <!-- LIABILITIES COLUMN -->
-      <div>
-        <div class="col-header">
-          <span class="col-title">Liabilities</span>
-          <span class="col-total red">$420,000 total</span>
-        </div>
-
-        <!-- Mortgage -->
-        <div class="cat-row" onclick="toggleCat('mortgage')" aria-expanded="false">
-          <div class="cat-icon" style="background:#fee2e2;"><i class="ti ti-home" style="color:#dc2626;" aria-hidden="true"></i></div>
-          <div class="cat-info">
-            <div class="cat-name">Mortgage</div>
-            <div class="cat-sub">3.2% · payoff 2039</div>
-          </div>
-          <div class="src-with-update"><span class="src-badge src-doc">Stmt · Mar</span><span class="src-update">Update</span></div>
-          <span class="cat-amount red">$420,000</span>
-          <button class="chev-btn" id="chev-mortgage" aria-label="Expand mortgage"><i class="ti ti-chevron-down"></i></button>
-        </div>
-        <div class="cat-detail" id="detail-mortgage">
-          <div class="detail-table-wrap" style="margin-top:6px;">
-            <table class="detail-table">
-              <thead><tr><th>Lender</th><th>Rate</th><th>Monthly</th><th style="text-align:right;">Balance</th></tr></thead>
-              <tbody>
-                <tr>
-                  <td>Wells Fargo<span class="acct-sub">30yr fixed</span></td>
-                  <td>3.2% fixed</td>
-                  <td>$2,180/mo</td>
-                  <td class="right" style="color:#dc2626;">$420,000</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="detail-callout">
-            <i class="ti ti-bulb" aria-hidden="true"></i>
-            Refinance opportunity at current rates could save ~$340/mo. Rate expires 2039.
-          </div>
-        </div>
-
-        <!-- Other debt -->
-        <div class="cat-row no-expand" style="border-bottom:none;">
-          <div class="cat-icon" style="background:#f0f5ff;"><i class="ti ti-credit-card" style="color:#a8a29e;" aria-hidden="true"></i></div>
-          <div class="cat-info">
-            <div class="cat-name">Other debt</div>
-            <div class="cat-sub">No balance reported</div>
-          </div>
-          <span class="src-badge src-manual">Manual</span>
-          <span class="cat-amount muted">$0</span>
-        </div>
-
-        <!-- Net worth calc -->
-        <div class="nw-calc">
-          <div class="nw-calc-row">
-            <span class="nwc-label">Total assets</span>
-            <span class="nwc-val">$3,472,000</span>
-          </div>
-          <div class="nw-calc-row">
-            <span class="nwc-label">Total liabilities</span>
-            <span class="nwc-val" style="color:#dc2626;">−$420,000</span>
-          </div>
-          <hr class="nw-calc-divider">
-          <div class="nw-calc-total">
-            <span>Net worth</span>
-            <span>$3,052,000</span>
-          </div>
-        </div>
-
-        <!-- Coverage section -->
-        <div class="coverage-section">
-          <div class="cov-header">
-            <div class="cov-header-left">
-              <i class="ti ti-shield" aria-hidden="true"></i>Coverage
+          <!-- Invested assets -->
+          <div class="cat-row" onclick="toggleCat('invested')" aria-expanded="false" aria-controls="detail-invested">
+            <div class="cat-left">
+              <div class="cat-icon" style="background:#dbeafe;"><i class="ti ti-trending-up" style="color:#3b82f6;"></i></div>
+              <div><div class="cat-name">Invested assets</div><div class="cat-sub">4 accounts</div></div>
             </div>
-            <span class="cov-gap-badge"><i class="ti ti-alert-circle" style="font-size:11px;" aria-hidden="true"></i>1 gap</span>
+            <div class="cat-right">
+              <span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;"></i>Altruist</span>
+              <span class="cat-amt">$1,800,000</span>
+              <button class="chev-btn" id="chev-invested" aria-label="Toggle invested assets"><i class="ti ti-chevron-down"></i></button>
+            </div>
           </div>
-          <div class="cov-col-headers">
-            <div>Type</div>
-            <div>Detail</div>
-            <div>Status</div>
-            <div>Source</div>
+          <div class="cat-detail" id="detail-invested">
+            <div class="detail-wrap">
+              <table class="detail-table">
+                <thead><tr><th>Account</th><th>Institution</th><th>Yield</th><th style="text-align:right;">Value</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>Robert – Brokerage<span class="acct-sub">···4821</span></td>
+                    <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;"></i>Altruist</span></td>
+                    <td style="color:#a8a29e;">—</td>
+                    <td class="td-right">$620,000</td>
+                  </tr>
+                  <tr>
+                    <td>Robert – 401(k)<span class="acct-sub">Fidelity</span></td>
+                    <td><span class="src-badge src-doc">Stmt · Jan</span></td>
+                    <td style="color:#a8a29e;">—</td>
+                    <td class="td-right">$710,000</td>
+                  </tr>
+                  <tr>
+                    <td>Linda – IRA<span class="acct-sub">···2203</span></td>
+                    <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;"></i>Altruist</span></td>
+                    <td style="color:#a8a29e;">—</td>
+                    <td class="td-right">$310,000</td>
+                  </tr>
+                  <tr>
+                    <td>Joint – Money market<span class="acct-sub">···0044</span></td>
+                    <td><span class="src-badge src-live"><i class="ti ti-refresh" style="font-size:9px;"></i>Altruist</span></td>
+                    <td class="td-green">4.85% APY</td>
+                    <td class="td-right">$160,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <div class="cov-table-row">
-            <div>
-              <div class="cov-type-name">Life insurance</div>
-              <div class="cov-type-sub">Robert · term</div>
+          <!-- Real estate -->
+          <div class="cat-row" onclick="toggleCat('realestate')" aria-expanded="false" aria-controls="detail-realestate">
+            <div class="cat-left">
+              <div class="cat-icon" style="background:#dbeafe;"><i class="ti ti-home" style="color:#3b82f6;"></i></div>
+              <div><div class="cat-name">Real estate</div><div class="cat-sub">Primary residence</div></div>
             </div>
-            <div class="cov-detail-text">$2M · exp. 2031</div>
-            <div><span class="cov-in-place-badge"><i class="ti ti-check" style="font-size:11px;" aria-hidden="true"></i>In place</span></div>
-            <div class="src-with-update"><span class="src-badge src-doc">Apr 28</span><span class="src-update">Update</span></div>
+            <div class="cat-right">
+              <span class="src-badge src-doc">Appraisal '23</span>
+              <span class="cat-amt">$950,000</span>
+              <button class="chev-btn" id="chev-realestate" aria-label="Toggle real estate"><i class="ti ti-chevron-down"></i></button>
+            </div>
+          </div>
+          <div class="cat-detail" id="detail-realestate">
+            <div class="detail-wrap">
+              <table class="detail-table">
+                <thead><tr><th>Property</th><th>Source</th><th>Year</th><th style="text-align:right;">Value</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>2847 Maple St, SF<span class="acct-sub">Primary residence</span></td>
+                    <td><span class="src-badge src-doc">Appraisal</span></td>
+                    <td style="color:#a8a29e;">2023</td>
+                    <td class="td-right">$950,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <div class="cov-table-row">
-            <div>
-              <div class="cov-type-name">Umbrella</div>
-              <div class="cov-type-sub">Household</div>
+          <!-- Business equity -->
+          <div class="cat-row" onclick="toggleCat('business')" aria-expanded="false" aria-controls="detail-business">
+            <div class="cat-left">
+              <div class="cat-icon" style="background:#dbeafe;"><i class="ti ti-briefcase" style="color:#3b82f6;"></i></div>
+              <div><div class="cat-name">Business equity</div><div class="cat-sub">Marketing agency</div></div>
             </div>
-            <div class="cov-detail-text">$1M policy</div>
-            <div><span class="cov-in-place-badge"><i class="ti ti-check" style="font-size:11px;" aria-hidden="true"></i>In place</span></div>
-            <div class="src-with-update"><span class="src-badge src-doc">Apr 28</span><span class="src-update">Update</span></div>
+            <div class="cat-right">
+              <span class="src-badge src-doc">Valuation '23</span>
+              <span class="cat-amt">$300,000</span>
+              <button class="chev-btn" id="chev-business" aria-label="Toggle business equity"><i class="ti ti-chevron-down"></i></button>
+            </div>
+          </div>
+          <div class="cat-detail" id="detail-business">
+            <div class="detail-wrap">
+              <table class="detail-table">
+                <thead><tr><th>Entity</th><th>Source</th><th>Exit</th><th style="text-align:right;">Value</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>Thornton Marketing LLC<span class="acct-sub">100% ownership</span></td>
+                    <td><span class="src-badge src-doc">Valuation</span></td>
+                    <td style="color:#a8a29e;">3–5 yrs</td>
+                    <td class="td-right">$300,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <div class="cov-table-row">
-            <div>
-              <div class="cov-type-name">Long-term care</div>
-              <div class="cov-type-sub">Robert &amp; Linda</div>
+          <!-- Other assets (no expand) -->
+          <div class="cat-row no-exp" style="border-bottom:none;">
+            <div class="cat-left">
+              <div class="cat-icon" style="background:#f0f5ff;"><i class="ti ti-wallet" style="color:#a8a29e;"></i></div>
+              <div><div class="cat-name">Other assets</div><div class="cat-sub">Checking, savings</div></div>
             </div>
-            <div class="cov-detail-red">No coverage on file</div>
-            <div><span class="cov-gap-sev" role="status" aria-label="Coverage gap, high severity">Gap ·<br>HIGH</span></div>
-            <div><button class="src-missing"><i class="ti ti-upload" style="font-size:10px;margin-right:3px;" aria-hidden="true"></i>Add policy</button></div>
+            <div class="cat-right">
+              <button class="src-missing" onclick="event.stopPropagation()">+ Add file</button>
+              <span class="cat-amt muted">Unknown</span>
+            </div>
           </div>
         </div>
-      </div>
 
-    </div>
+        <!-- 5B: LIABILITIES -->
+        <div>
+          <div class="col-hdr">
+            <span class="col-hdr-title">Liabilities</span>
+            <span class="col-hdr-total red">$420,000 total</span>
+          </div>
+
+          <!-- Mortgage -->
+          <div class="cat-row" onclick="toggleCat('mortgage')" aria-expanded="false" aria-controls="detail-mortgage">
+            <div class="cat-left">
+              <div class="cat-icon" style="background:#fee2e2;"><i class="ti ti-home-minus" style="color:#dc2626;"></i></div>
+              <div><div class="cat-name">Mortgage</div><div class="cat-sub">3.2% · payoff 2039</div></div>
+            </div>
+            <div class="cat-right">
+              <span class="src-badge src-doc">Wells Fargo</span>
+              <span class="cat-amt red">$420,000</span>
+              <button class="chev-btn" id="chev-mortgage" aria-label="Toggle mortgage"><i class="ti ti-chevron-down"></i></button>
+            </div>
+          </div>
+          <div class="cat-detail" id="detail-mortgage">
+            <div class="detail-wrap">
+              <table class="detail-table">
+                <thead><tr><th>Lender</th><th>Rate</th><th>Monthly</th><th style="text-align:right;">Balance</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>Wells Fargo<span class="acct-sub">2847 Maple St</span></td>
+                    <td>3.2% fixed</td>
+                    <td>$2,180/mo</td>
+                    <td class="td-right" style="color:#dc2626;">$420,000</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="detail-callout">Refinance opportunity at current rates could save ~$340/mo.</div>
+            </div>
+          </div>
+
+          <!-- Other debt (no expand) -->
+          <div class="cat-row no-exp" style="border-bottom:none;">
+            <div class="cat-left">
+              <div class="cat-icon" style="background:#f0f5ff;"><i class="ti ti-credit-card" style="color:#a8a29e;"></i></div>
+              <div><div class="cat-name">Other debt</div><div class="cat-sub">No balance reported</div></div>
+            </div>
+            <div class="cat-right">
+              <span class="src-badge src-manual">Manual</span>
+              <span class="cat-amt muted">$0</span>
+            </div>
+          </div>
+
+          <!-- Net worth calc -->
+          <div class="nw-calc">
+            <div class="nw-calc-row"><span>Total assets</span><span>$3,472,000</span></div>
+            <div class="nw-calc-row"><span>Total liabilities</span><span style="color:#dc2626;">−$420,000</span></div>
+            <hr class="nw-calc-div">
+            <div class="nw-calc-total"><span>Net worth</span><span>$3,052,000</span></div>
+          </div>
+        </div>
+
+      </div><!-- end bs-grid -->
+
+      <!-- 5C: COVERAGE (full-width) -->
+      <div class="cov-section">
+        <div class="cov-section-lbl"><i class="ti ti-shield"></i>Coverage</div>
+        <div class="cov-grid">
+
+          <!-- Term life -->
+          <div class="cov-card">
+            <div class="cov-card-top">
+              <div class="cov-icon" style="background:#dbeafe;"><i class="ti ti-shield-check" style="color:#3b82f6;"></i></div>
+              <div class="cov-name">Term life</div>
+            </div>
+            <div class="cov-detail-ok">$2M · Robert · expires 2031</div>
+            <div class="cov-bottom">
+              <span class="src-badge src-doc">Lincoln Financial</span>
+              <span class="cov-in-place">In place</span>
+            </div>
+          </div>
+
+          <!-- Umbrella -->
+          <div class="cov-card">
+            <div class="cov-card-top">
+              <div class="cov-icon" style="background:#dbeafe;"><i class="ti ti-umbrella" style="color:#3b82f6;"></i></div>
+              <div class="cov-name">Umbrella</div>
+            </div>
+            <div class="cov-detail-ok">$1M personal liability</div>
+            <div class="cov-bottom">
+              <span class="src-badge src-doc">State Farm</span>
+              <span class="cov-in-place">In place</span>
+            </div>
+          </div>
+
+          <!-- Long-term care -->
+          <div class="cov-card gap-card">
+            <div class="cov-card-top">
+              <div class="cov-icon" style="background:#fee2e2;"><i class="ti ti-heart-broken" style="color:#dc2626;"></i></div>
+              <div class="cov-name">Long-term care</div>
+            </div>
+            <div class="cov-detail-gap">No policy on file</div>
+            <div class="cov-bottom">
+              <button class="src-missing">+ Upload policy</button>
+              <button class="cov-gap-badge" onclick="openDrawer('LTC coverage gap','I can see Robert and Linda have no LTC coverage. Want me to model the cost exposure and compare product options for their 2031 target?')" aria-label="Coverage gap — ask Hazel">Gap — Ask Hazel</button>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- end coverage -->
+
+    </div><!-- end bs-inner -->
+  </div><!-- end card -->
+</div>
+
+<!-- § 6  DATA ALERTS -->
+<div class="sw">
+  <div class="alert-card alert-conflict">
+    <div class="alert-title"><i class="ti ti-alert-circle"></i>Data conflict detected</div>
+    <div class="alert-body">Beneficiary on the revocable trust (Linda Thornton, estate docs 2023) does not match the investment account beneficiary on file (Robert's estate, 2019 designation).</div>
+    <div class="alert-link">Resolve conflict →</div>
+  </div>
+  <div class="alert-card alert-missing">
+    <div class="alert-title"><i class="ti ti-file-plus"></i>Missing document</div>
+    <div class="alert-body">No LTC insurance policy on file. Upload the policy to allow Hazel to analyze coverage gaps.</div>
+    <div class="alert-link">Send document request →</div>
   </div>
 </div>
 
-<!-- ══ SECTIONS 5+6: KNOW THEM + HAZEL INSIGHTS ══ -->
-<div class="section-wrap last">
-  <div class="bottom-grid">
+<!-- § 7  KNOW THEM -->
+<div class="sw">
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-hdr-left"><i class="ti ti-users"></i>Know them</div>
+      <div class="card-hdr-right">See full profile →</div>
+    </div>
+    <div class="kt-grid">
 
-    <!-- LEFT: Know them -->
-    <div class="card">
-      <div class="card-header">
-        <div class="ch-left"><i class="ti ti-users" aria-hidden="true"></i>Know them</div>
-        <div class="ch-right-muted">See full profile →</div>
+      <!-- Left: pill groups -->
+      <div>
+        <div class="kt-row">
+          <div class="kt-key">Life events</div>
+          <div class="kt-chips">
+            <span class="pill pill-amber">Daughter starting college 2026</span>
+            <span class="pill pill-blue">Robert planning business exit</span>
+            <span class="pill pill-pink">Father passed 2024</span>
+            <span class="pill pill-gray"><i class="ti ti-cake" style="font-size:10px;margin-right:3px;"></i>Robert · Jun 3</span>
+            <span class="pill pill-gray"><i class="ti ti-cake" style="font-size:10px;margin-right:3px;"></i>Linda · Sep 17</span>
+          </div>
+        </div>
+        <div class="kt-row">
+          <div class="kt-key">Goals</div>
+          <div class="kt-chips">
+            <span class="pill pill-green">Retire by 62 · 2031</span>
+            <span class="pill pill-green">Fund college fully</span>
+            <span class="pill pill-blue">Travel in retirement</span>
+            <span class="pill pill-gray">Leave inheritance</span>
+          </div>
+        </div>
+        <div class="kt-row">
+          <div class="kt-key">Communication style</div>
+          <div class="kt-chips">
+            <span class="pill pill-gray">Prefers email</span>
+            <span class="pill pill-gray">Quarterly reviews</span>
+            <span class="pill pill-amber">Risk-averse</span>
+          </div>
+        </div>
+        <div class="kt-row">
+          <div class="kt-key">Context</div>
+          <div class="kt-chips">
+            <span class="pill pill-gray">Marketing agency owner</span>
+            <span class="pill pill-gray">Nurse practitioner</span>
+            <span class="pill pill-gray">Two adult kids</span>
+          </div>
+        </div>
       </div>
-      <div class="kt-body">
-        <!-- Narrative first -->
-        <div class="narrative-text">
+
+      <!-- Right: narrative + last conversation -->
+      <div>
+        <div class="narrative">
           Robert and Linda are approaching a major transition: Robert's planned agency exit in 3–5 years will reshape income, taxes, and estate needs simultaneously. Linda is a stable earner. Both are risk-averse and want clarity more than performance. Their eldest daughter starts college this fall — a known short-term cash need. Robert's father passed in 2024, which has made estate conversations more real for them.
         </div>
         <div class="narrative-ts">
-          <i class="ti ti-clock" aria-hidden="true"></i>
-          Context updated after meeting Apr 28, 2026
+          <i class="ti ti-clock"></i>Context updated after meeting Apr 28, 2026
         </div>
-        <!-- Tags below -->
-        <div class="kt-section-gap">
-          <div class="kt-row">
-            <div class="kt-key">Life events</div>
-            <div class="kt-chips">
-              <span class="pill pill-amber">Daughter starting college 2026</span>
-              <span class="pill pill-blue">Robert planning business exit</span>
-              <span class="pill pill-pink">Father passed 2024</span>
-              <span class="pill pill-gray"><i class="ti ti-cake" style="font-size:10px;margin-right:3px;" aria-hidden="true"></i>Robert · Jun 3</span>
-              <span class="pill pill-gray"><i class="ti ti-cake" style="font-size:10px;margin-right:3px;" aria-hidden="true"></i>Linda · Sep 17</span>
-            </div>
+        <div class="last-convo">
+          <div class="lc-hdr">
+            <div class="lc-title">Last conversation — Apr 28</div>
+            <div class="lc-meta">Meeting · 52 min</div>
           </div>
-          <div class="kt-row">
-            <div class="kt-key">Goals</div>
-            <div class="kt-chips">
-              <span class="pill pill-green">Retire by 62 · 2031</span>
-              <span class="pill pill-green">Fund college fully</span>
-              <span class="pill pill-blue">Travel in retirement</span>
-              <span class="pill pill-gray">Leave inheritance</span>
-            </div>
+          <div class="lc-pills">
+            <span class="pill pill-green" style="font-size:11px;padding:2px 8px;">Robert: Engaged</span>
+            <span class="pill pill-blue"  style="font-size:11px;padding:2px 8px;">Linda: Present</span>
+            <span class="pill pill-amber" style="font-size:11px;padding:2px 8px;">LTC concern raised</span>
           </div>
-          <div class="kt-row">
-            <div class="kt-key">Comm. style</div>
-            <div class="kt-chips">
-              <span class="pill pill-gray">Prefers email</span>
-              <span class="pill pill-gray">Quarterly reviews</span>
-              <span class="pill pill-amber">Risk-averse</span>
-            </div>
+          <div class="lc-body">
+            Quarterly review covered the business exit timeline, Roth conversion planning, and insurance gaps. Robert asked for an analysis of an installment sale structure. Linda raised concern about long-term care after watching her parents navigate elder care costs.
           </div>
-          <div class="kt-row" style="border-bottom:none;">
-            <div class="kt-key">Context</div>
-            <div class="kt-chips">
-              <span class="pill pill-gray">Marketing agency owner</span>
-              <span class="pill pill-gray">Nurse practitioner</span>
-              <span class="pill pill-gray">Two adult kids</span>
-            </div>
+          <div class="lc-themes">
+            <strong>Key themes:</strong> LTC coverage · Roth conversion · College funding · Business exit
           </div>
         </div>
       </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- § 8  HAZEL INSIGHTS -->
+<div class="sw last">
+  <div class="card">
+    <div class="hz-hdr">
+      <div class="hz-hdr-left"><i class="ti ti-sparkles"></i>Hazel insights</div>
+      <span class="opps-pill">3 opportunities</span>
     </div>
 
-    <!-- RIGHT: Hazel insights -->
-    <div class="card">
-      <div class="card-header">
-        <div class="ch-left" style="font-size:13px;font-weight:600;text-transform:none;letter-spacing:0;color:#1c1917;">
-          <i class="ti ti-sparkles" style="font-size:15px;" aria-hidden="true"></i>
-          Hazel insights
+    <div class="hz-row">
+      <div class="hz-circle"><i class="ti ti-heart-broken"></i></div>
+      <div class="hz-body">
+        <div class="hz-title">LTC coverage gap</div>
+        <div class="hz-desc">Robert and Linda have no long-term care coverage. Significant portfolio risk given 2031 retirement target.</div>
+        <div class="hz-link" onclick="openDrawer('LTC coverage gap','I can see Robert and Linda have no LTC coverage. Want me to model the cost exposure and compare product options for their 2031 target?')">
+          <i class="ti ti-sparkles"></i>Explore options →
         </div>
-        <span class="opps-badge">3 opportunities</span>
       </div>
+      <span class="sev-badge sev-high">High</span>
+    </div>
 
-      <!-- Last conversation first -->
-      <div style="padding:14px 16px 0;">
-        <div class="last-convo" style="margin-top:0;">
-          <div class="last-convo-hdr">
-            <div class="last-convo-title">Last conversation — Apr 28</div>
-            <div class="last-convo-meta">Meeting · 52 min</div>
-          </div>
-          <div class="last-convo-pills">
-            <span class="pill pill-green" style="font-size:10px;padding:2px 8px;">Robert: Engaged</span>
-            <span class="pill pill-blue"  style="font-size:10px;padding:2px 8px;">Linda: Present</span>
-            <span class="pill pill-amber" style="font-size:10px;padding:2px 8px;">LTC concern raised</span>
-          </div>
-          <div class="last-convo-body">
-            Quarterly review covered the business exit timeline, Roth conversion planning, and insurance gaps. Robert asked for an analysis of an installment sale structure. Linda raised concern about long-term care after watching her parents navigate elder care costs — surfacing the LTC gap as a priority action item.
-          </div>
-          <hr class="last-convo-divider">
-          <div class="last-convo-themes">
-            <strong>Key themes:</strong> Business exit strategy · Roth conversion window · LTC insurance gap · Estate beneficiary review · College funding
-          </div>
+    <div class="hz-row">
+      <div class="hz-circle"><i class="ti ti-arrows-transfer-up"></i></div>
+      <div class="hz-body">
+        <div class="hz-title">Roth conversion window</div>
+        <div class="hz-desc">Income drops at business exit. 2027–2029 may be optimal for Roth conversions before RMDs begin.</div>
+        <div class="hz-link" onclick="openConversation()">
+          <i class="ti ti-sparkles"></i>Model this →
         </div>
       </div>
+      <span class="sev-badge sev-medium">Medium</span>
+    </div>
 
-      <!-- Insights below -->
-      <div class="hz-row" style="margin-top:14px;">
-        <div class="hz-circle"><i class="ti ti-shield-off" aria-hidden="true"></i></div>
-        <div class="hz-body">
-          <div class="hz-title">LTC coverage gap</div>
-          <div class="hz-desc">Robert and Linda have no long-term care coverage. With a 2031 retirement target, this represents a significant portfolio risk.</div>
-          <div class="hz-link">Explore options →</div>
+    <div class="hz-row">
+      <div class="hz-circle"><i class="ti ti-briefcase"></i></div>
+      <div class="hz-body">
+        <div class="hz-title">Business exit planning</div>
+        <div class="hz-desc">Robert's planned exit in 3–5 years creates interconnected tax, cash flow, and estate decisions.</div>
+        <div class="hz-link" onclick="openConversation()">
+          <i class="ti ti-sparkles"></i>Start conversation →
         </div>
-        <span class="sev-badge sev-high" role="status" aria-label="Severity: High">High</span>
       </div>
-
-      <div class="hz-row">
-        <div class="hz-circle"><i class="ti ti-transform" aria-hidden="true"></i></div>
-        <div class="hz-body">
-          <div class="hz-title">Roth conversion window</div>
-          <div class="hz-desc">Income drops significantly at business exit. 2027–2029 may be an optimal window for Roth conversions before RMDs begin.</div>
-          <div class="hz-link">Model this →</div>
-        </div>
-        <span class="sev-badge sev-medium" role="status" aria-label="Severity: Medium">Medium</span>
-      </div>
-
-      <div class="hz-row">
-        <div class="hz-circle"><i class="ti ti-businessplan" aria-hidden="true"></i></div>
-        <div class="hz-body">
-          <div class="hz-title">Business exit planning</div>
-          <div class="hz-desc">Robert's planned exit in 3–5 years creates interconnected tax, cash flow, and estate planning decisions that should be addressed now.</div>
-          <div class="hz-link">Start conversation →</div>
-        </div>
-        <span class="sev-badge sev-medium" role="status" aria-label="Severity: Medium">Medium</span>
-      </div>
+      <span class="sev-badge sev-medium">Medium</span>
     </div>
 
   </div>
+</div>
+
+</div><!-- end main-content -->
+
+<!-- ══════════════════════════════════════════
+     ASK HAZEL DRAWER
+══════════════════════════════════════════ -->
+<div class="drawer" id="hazelDrawer">
+
+  <!-- Header -->
+  <div class="dr-hdr">
+    <div class="dr-hdr-left">
+      <i class="ti ti-sparkles dr-sparkles"></i>
+      <span class="dr-title">Ask Hazel</span>
+      <span class="dr-hh-pill">Thornton HH</span>
+    </div>
+    <button class="dr-close" onclick="closeDrawer()" aria-label="Close Ask Hazel"><i class="ti ti-x"></i></button>
+  </div>
+
+  <!-- Context strip -->
+  <div class="dr-ctx">
+    <i class="ti ti-lock"></i>
+    Scoped to Thornton Household · answers use this client's data only
+  </div>
+
+  <!-- Tabs -->
+  <div class="dr-tabs">
+    <button class="dr-tab active" id="tabAsk">Ask</button>
+    <button class="dr-tab" id="tabHistory">History</button>
+  </div>
+
+  <!-- Content area -->
+  <div class="dr-content" id="drContent">
+
+    <!-- STATE A: Empty (default) -->
+    <div id="stateEmpty">
+      <div class="de-center">
+        <div class="de-icon-wrap"><i class="ti ti-sparkles"></i></div>
+        <div class="de-title">Ask anything about this household</div>
+        <div class="de-sub">Hazel has access to all facts, documents, meeting notes, and insights for the Thorntons.</div>
+      </div>
+      <div class="de-qs">
+        <button class="de-q" onclick="startQuestion('What\'s the biggest risk for this household?')">
+          What's the biggest risk for this household?<i class="ti ti-arrow-right"></i>
+        </button>
+        <button class="de-q" onclick="startQuestion('How should I prioritize the Roth conversion?')">
+          How should I prioritize the Roth conversion?<i class="ti ti-arrow-right"></i>
+        </button>
+        <button class="de-q" onclick="startQuestion('Draft prep notes for the Jun 15 meeting')">
+          Draft prep notes for the Jun 15 meeting<i class="ti ti-arrow-right"></i>
+        </button>
+        <button class="de-q" onclick="startQuestion('What open items need attention?')">
+          What open items need attention?<i class="ti ti-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- STATE B: Pre-filled context -->
+    <div id="statePrefilled" style="display:none;">
+      <div class="dp-banner">
+        <i class="ti ti-info-circle"></i>
+        Context added from <strong id="prefillLabel">LTC coverage gap</strong>
+      </div>
+      <div class="dc-hazel-wrap">
+        <div class="dc-hazel-av"><i class="ti ti-sparkles"></i></div>
+        <div class="dc-hazel-bubble" id="prefillMsg">
+          I can see Robert and Linda have no LTC coverage. Want me to model the cost exposure and compare product options for their 2031 target?
+        </div>
+      </div>
+    </div>
+
+    <!-- STATE C: Conversation -->
+    <div id="stateConversation" style="display:none;">
+      <div class="dc-msgs" id="messageList">
+        <div class="dc-user-wrap">
+          <div class="dc-user-bubble">What's the biggest risk right now?</div>
+        </div>
+        <div class="dc-hazel-wrap">
+          <div class="dc-hazel-av"><i class="ti ti-sparkles"></i></div>
+          <div class="dc-hazel-bubble">
+            The highest-priority risk is the <strong>LTC coverage gap</strong>. With a 2031 retirement target and no policy on file, a health event could consume a large portion of their $3M net worth. Second is the business exit — Robert's 3–5 year timeline creates interconnected tax and estate decisions not yet coordinated.
+          </div>
+        </div>
+        <div class="dc-user-wrap">
+          <div class="dc-user-bubble">What LTC products make sense?</div>
+        </div>
+        <div class="dc-hazel-wrap">
+          <div class="dc-hazel-av"><i class="ti ti-sparkles"></i></div>
+          <div class="dc-hazel-bubble">
+            Given their risk-averse style and 'leave inheritance' goal:
+            <ul>
+              <li><strong>Hybrid life/LTC</strong> — unused benefits pass to heirs</li>
+              <li><strong>Traditional LTC</strong> — lower premium, no death benefit</li>
+            </ul>
+            Want me to draft a client note for the Jun 15 meeting?
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end dr-content -->
+
+  <!-- Input area -->
+  <div class="dr-input">
+    <div class="dr-input-row">
+      <textarea class="dr-textarea" id="hazelInput" placeholder="Ask Hazel..." rows="2"></textarea>
+      <button class="dr-send" onclick="sendMessage()" aria-label="Send message"><i class="ti ti-send"></i></button>
+    </div>
+    <div class="dr-hint">Hazel can draft emails, model scenarios, and prepare meeting notes</div>
+  </div>
+
+</div><!-- end drawer -->
+
+</div><!-- end page-root -->
+
+<!-- Reopen tab (visible when drawer is closed) -->
+<div class="reopen-tab" id="reopenTab" onclick="openDrawer()" role="button" aria-label="Open Ask Hazel">
+  <i class="ti ti-sparkles"></i>
+  Ask Hazel
 </div>
 
 <script>
@@ -1000,42 +1016,144 @@ new Chart(document.getElementById('allocChart').getContext('2d'), {
   data: {
     datasets: [{
       data: [68, 18, 9, 5],
-      backgroundColor: ['#3b82f6', '#a78bfa', '#34d399', '#a8a29e'],
+      backgroundColor: ['#3b82f6','#a78bfa','#34d399','#a8a29e'],
       borderWidth: 0, hoverOffset: 0
     }]
   },
   options: {
-    cutout: '68%',
-    responsive: false,
+    cutout: '68%', responsive: false,
     plugins: { legend: { display: false }, tooltip: { enabled: false } },
     animation: { duration: 500 }
   }
 });
 
-/* ── Expand / collapse ── */
+/* ── Balance sheet expand/collapse ── */
 function toggleCat(id) {
   const detail = document.getElementById('detail-' + id);
   const chev   = document.getElementById('chev-' + id);
-  const isOpen = detail.style.maxHeight && detail.style.maxHeight !== '0px';
-  if (isOpen) {
-    detail.style.maxHeight = '0px';
-    if (chev) { chev.style.transform = 'rotate(0deg)'; chev.setAttribute('aria-expanded', 'false'); }
-  } else {
-    detail.style.maxHeight = detail.scrollHeight + 'px';
-    if (chev) { chev.style.transform = 'rotate(180deg)'; chev.setAttribute('aria-expanded', 'true'); }
+  const isOpen = detail.style.display === 'block';
+  detail.style.display = isOpen ? 'none' : 'block';
+  if (chev) chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+/* ── Drawer ── */
+let drawerOpen = true;
+let currentState = 'empty';
+
+function closeDrawer() {
+  drawerOpen = false;
+  document.getElementById('hazelDrawer').classList.add('closed');
+  document.getElementById('reopenTab').style.display = 'flex';
+  updateToggleBtn();
+}
+
+function openDrawer(prefillContext, prefillMsg) {
+  drawerOpen = true;
+  document.getElementById('hazelDrawer').classList.remove('closed');
+  document.getElementById('reopenTab').style.display = 'none';
+  updateToggleBtn();
+  if (prefillContext) {
+    showPrefilled(prefillContext, prefillMsg);
   }
 }
 
-/* ── Open invested + mortgage by default ── */
-window.addEventListener('load', function () {
-  ['invested', 'mortgage'].forEach(function (id) {
-    const detail = document.getElementById('detail-' + id);
-    const chev   = document.getElementById('chev-' + id);
-    if (detail) {
-      detail.style.maxHeight = detail.scrollHeight + 'px';
-      if (chev) { chev.style.transform = 'rotate(180deg)'; chev.setAttribute('aria-expanded', 'true'); }
-    }
-  });
+function openConversation() {
+  openDrawer();
+  showConversation();
+}
+
+function toggleDrawer() {
+  if (drawerOpen) closeDrawer();
+  else openDrawer();
+}
+
+function updateToggleBtn() {
+  const btn = document.getElementById('hazelToggleBtn');
+  if (drawerOpen) {
+    btn.className = 'btn btn-hazel-filled';
+    btn.innerHTML = '<i class="ti ti-sparkles"></i>Close Hazel';
+  } else {
+    btn.className = 'btn btn-hazel-outline';
+    btn.innerHTML = '<i class="ti ti-sparkles"></i>Ask Hazel';
+  }
+}
+
+/* ── Drawer states ── */
+function showEmpty() {
+  document.getElementById('stateEmpty').style.display = '';
+  document.getElementById('statePrefilled').style.display = 'none';
+  document.getElementById('stateConversation').style.display = 'none';
+  currentState = 'empty';
+}
+
+function showPrefilled(context, msg) {
+  document.getElementById('stateEmpty').style.display = 'none';
+  document.getElementById('statePrefilled').style.display = '';
+  document.getElementById('stateConversation').style.display = 'none';
+  document.getElementById('prefillLabel').textContent = context;
+  if (msg) document.getElementById('prefillMsg').innerHTML = formatMsg(msg);
+  currentState = 'prefilled';
+}
+
+function showConversation() {
+  document.getElementById('stateEmpty').style.display = 'none';
+  document.getElementById('statePrefilled').style.display = 'none';
+  document.getElementById('stateConversation').style.display = '';
+  currentState = 'conversation';
+}
+
+function startQuestion(text) {
+  openDrawer();
+  showConversation();
+  const list = document.getElementById('messageList');
+  // Clear default messages and add fresh
+  list.innerHTML = '';
+  addMessage('user', text);
+  setTimeout(() => {
+    addMessage('hazel', 'The highest-priority risk is the **LTC coverage gap**. With a 2031 retirement target and no policy on file, a health event could consume a large portion of their $3M net worth. Second is the business exit — Robert\'s 3–5 year timeline creates interconnected tax and estate decisions not yet coordinated.');
+  }, 700);
+}
+
+function addMessage(role, content) {
+  const list = document.getElementById('messageList');
+  const wrap = document.createElement('div');
+  if (role === 'user') {
+    wrap.className = 'dc-user-wrap';
+    wrap.innerHTML = '<div class="dc-user-bubble">' + escHtml(content) + '</div>';
+  } else {
+    wrap.className = 'dc-hazel-wrap';
+    wrap.innerHTML = '<div class="dc-hazel-av"><i class="ti ti-sparkles"></i></div><div class="dc-hazel-bubble">' + formatMsg(content) + '</div>';
+  }
+  list.appendChild(wrap);
+  list.scrollTop = list.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById('hazelInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  if (currentState !== 'conversation') {
+    showConversation();
+    document.getElementById('messageList').innerHTML = '';
+  }
+  addMessage('user', msg);
+  setTimeout(() => {
+    addMessage('hazel', 'I\'m analyzing the Thornton household data to answer your question. Give me a moment to pull together the relevant context.');
+  }, 800);
+}
+
+function formatMsg(text) {
+  return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+function escHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* Enter to send (Shift+Enter for newline) */
+document.getElementById('hazelInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 });
 </script>
 </body>
